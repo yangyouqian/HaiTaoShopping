@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#d69292</color>
+    <!--设置-->
+    <color name="colorPrimaryDark">#00ffffff</color>
+    <color name="colorAccent">#a6a6a6</color>
+
+    <!--主色调-->
+    <color name="red">#c73e3e</color>
+    <color name="black">#000</color>
+    <color name="white">#ffffff</color>
+    <color name="transport">#00ffffff</color>
+
+    <!--使用在哪里+形态-->
+    <color name="tab_text_normal">#505050</color>
+    <color name="tab_text_selected">#000000</color>
+    <color name="tab_divide_line">#cacaca</color>
+
+</resources>
