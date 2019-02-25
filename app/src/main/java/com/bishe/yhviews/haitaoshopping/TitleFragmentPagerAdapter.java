@@ -21,18 +21,6 @@ public class TitleFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     /**
-     * titles是给TabLayout设置title用的
-     * @param fm
-     * @param mFragmentList
-     * @param titles
-     */
-    public TitleFragmentPagerAdapter(FragmentManager fm, List<Fragment> mFragmentList, String[] titles) {
-        super(fm);
-        this.mFragmentList = mFragmentList;
-        this.titles = titles;
-    }
-
-    /**
      * 描述：获取索引位置的Fragment.
      * @param position
      * @return
@@ -48,19 +36,6 @@ public class TitleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         }
         return fragment;
-    }
-
-    /**
-     * 返回viewpager对应的title。
-     * @param position
-     * @return
-     */
-    @Override
-    public CharSequence getPageTitle(int position) {
-        if (titles != null && titles.length>0){
-            return titles[position];
-        }
-        return null;
     }
 
     /**

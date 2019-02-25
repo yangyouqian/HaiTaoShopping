@@ -9,12 +9,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="MyTablayoutStyle" parent="Base.Widget.Design.TabLayout">
-        <item name="tabBackground">@null</item>
-        <item name="tabIndicatorHeight">0dp</item>
-        <item name="tabSelectedTextColor">@color/tab_text_selected</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/tab_text_normal</item>
-    </style>
 
 </resources>

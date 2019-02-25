@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabBackground="@android:color/transparent"
+        app:tabMode="fixed"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-    
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_layout"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/tab_divide_line"/>
+        android:background="@color/tab_divide_line"
+        android:layout_above="@id/tab_layout"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        style="@style/MyTablayoutStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/btn_add"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_above="@id/tab_layout"
+        android:layout_marginBottom="-20dp"
+        android:text="+"
+        android:lineSpacingMultiplier="0.9"
+        android:includeFontPadding="false"
+        android:textSize="38sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@drawable/home_add_btn_bg"
+        android:layout_centerHorizontal="true"/>
 
-
-
-</LinearLayout>
+</RelativeLayout>
