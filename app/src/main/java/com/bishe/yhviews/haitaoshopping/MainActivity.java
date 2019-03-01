@@ -1,5 +1,7 @@
 package com.bishe.yhviews.haitaoshopping;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Build;
@@ -17,7 +19,13 @@ import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.bishe.yhviews.haitaoshopping.home.HomeFragment;
+import com.bishe.yhviews.haitaoshopping.message.MessageFragment;
+import com.bishe.yhviews.haitaoshopping.personal.PersonalFragment;
+import com.bishe.yhviews.haitaoshopping.promotion.PromotionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private View placeHolderStatusBar;
+    private TextView btnAdd;
+
     private int[] tabTitleRes = {R.string.tab_home, R.string.tab_promotions, R.string.tab_message, R.string.tab_personal};
     private List<Fragment> mFragments;
 
@@ -46,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         placeHolderStatusBar = findViewById(R.id.place_holder_statusBar);
+        btnAdd = findViewById(R.id.btn_add);
         initPlaceHolder();
 
         initFragments();
@@ -74,8 +85,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 View view = tab.getCustomView();
                 TextView tv = view.findViewById(R.id.tv_bottom_name);
-                setBottomTabSelectedStyle(tv);
-                doTabStateChangeAnimation(1, 1.1f, tv);
+//                setBottomTabSelectedStyle(tv);
+                tv.setTextColor(getResources().getColor(R.color.tab_text_selected));
+                doTabStateChangeAnimation(15, 17, tv);
             }
 
             @Override
@@ -90,37 +102,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void doTabStateChangeAnimation(float scale1, float scale2, final TextView tv) {
-        valueAnimator = ValueAnimator.ofFloat(scale1, scale2);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float scale = (float) valueAnimator.getAnimatedValue();
-                tv.setScaleX(scale);
-                tv.setScaleY(scale);
-            }
-        });
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.setDuration(350);
-        valueAnimator.start();
-    }
-
-    private void setBottomTabSelectedStyle(TextView tv) {
-        tv.setTextColor(getResources().getColor(R.color.tab_text_selected));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-    }
-
-    private void setBottomTabNormalStyle(TextView tv) {
-        tv.setTextColor(getResources().getColor(R.color.tab_text_normal));
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-    }
-
     private void initFragments() {
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragment());
-        mFragments.add(new HomeFragment());
-        mFragments.add(new HomeFragment());
-        mFragments.add(new HomeFragment());
+        mFragments.add(new PromotionFragment());
+        mFragments.add(new MessageFragment());
+        mFragments.add(new PersonalFragment());
     }
 
     private void initPlaceHolder() {
@@ -130,16 +117,40 @@ public class MainActivity extends AppCompatActivity {
         placeHolderStatusBar.setLayoutParams(lp);
     }
 
+    private void doTabStateChangeAnimation(float scale1, float scale2, final TextView tv) {
+        valueAnimator = ValueAnimator.ofFloat(scale1, scale2);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float scale = (float) valueAnimator.getAnimatedValue();
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, scale);
+            }
+        });
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.setDuration(180);
+        valueAnimator.start();
+    }
+
+    private void setBottomTabSelectedStyle(TextView tv) {
+        tv.setTextColor(getResources().getColor(R.color.tab_text_selected));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+    }
+
+    private void setBottomTabNormalStyle(TextView tv) {
+        tv.setTextColor(getResources().getColor(R.color.tab_text_normal));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+    }
+
     private void setStatusBar(Activity activity) {
         int version = android.os.Build.VERSION.SDK_INT;
         if (version >= Build.VERSION_CODES.KITKAT && version < Build.VERSION_CODES.M) {
             //Android4.4到5.0处理方法:设置应用全屏,这样会导致应用与statusbar重叠,所以需要再设置占位view
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             placeHolderStatusBar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //android6.0以上,可以设置statusbar的字体颜色
             placeHolderStatusBar.setBackgroundColor(getResources().getColor(R.color.white));
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
     }
 

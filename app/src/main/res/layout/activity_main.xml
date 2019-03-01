@@ -16,6 +16,7 @@
         android:layout_alignParentBottom="true"
         app:tabRippleColor="@android:color/transparent"
         app:tabIndicatorHeight="0dp"
+        app:tabSelectedTextColor="@color/tab_text_normal"
         app:tabBackground="@android:color/transparent"
         app:tabMode="fixed"/>
 

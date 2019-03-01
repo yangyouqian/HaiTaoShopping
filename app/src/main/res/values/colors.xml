@@ -10,6 +10,7 @@
     <color name="black">#000</color>
     <color name="white">#ffffff</color>
     <color name="transport">#00ffffff</color>
+    <color name="text_normal">#505050</color>
 
     <!--使用在哪里+形态-->
     <color name="tab_text_normal">#505050</color>
