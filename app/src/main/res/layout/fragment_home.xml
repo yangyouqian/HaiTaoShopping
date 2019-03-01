@@ -8,16 +8,23 @@
     android:background="@color/white"
     tools:context=".home.HomeFragment">
 
-    <EditText
+    <TextView
+        android:id="@+id/tv_search"
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_marginTop="14dp"
         android:layout_marginBottom="14dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
+        android:gravity="center_vertical"
         android:paddingLeft="15dp"
-        android:textColorHint="#505050"
+        android:textColor="#505050"
         android:background="@drawable/home_frag_search_edit_text_bg"
-        android:hint="@string/home_fragment_want_buy"/>
+        android:text="@string/home_fragment_want_buy"/>
+
+    <com.bishe.yhviews.haitaoshopping.component.banner.BannerView
+        android:id="@+id/banner_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
 
 </LinearLayout>

@@ -2,15 +2,19 @@ package com.bishe.yhviews.haitaoshopping;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bishe.yhviews.haitaoshopping.home.HomeFragment;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private View placeHolderStatusBar;
     private int[] tabTitleRes = {R.string.tab_home, R.string.tab_promotions, R.string.tab_message, R.string.tab_personal};
     private List<Fragment> mFragments;
 
@@ -33,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setAndroidNativeLightStatusBar(this, true);
         init();
+        setStatusBar(this);
     }
 
     private void init() {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
+        placeHolderStatusBar = findViewById(R.id.place_holder_statusBar);
+        initPlaceHolder();
 
         initFragments();
 
@@ -116,14 +123,33 @@ public class MainActivity extends AppCompatActivity {
         mFragments.add(new HomeFragment());
     }
 
+    private void initPlaceHolder() {
+        placeHolderStatusBar.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) placeHolderStatusBar.getLayoutParams();
+        lp.height = getStatusBarHeight();
+        placeHolderStatusBar.setLayoutParams(lp);
+    }
 
-    private void setAndroidNativeLightStatusBar(Activity activity, boolean dark) {
-        View decor = activity.getWindow().getDecorView();
-        if (dark) {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+    private void setStatusBar(Activity activity) {
+        int version = android.os.Build.VERSION.SDK_INT;
+        if (version >= Build.VERSION_CODES.KITKAT && version < Build.VERSION_CODES.M) {
+            //Android4.4到5.0处理方法:设置应用全屏,这样会导致应用与statusbar重叠,所以需要再设置占位view
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            placeHolderStatusBar.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            //android6.0以上,可以设置statusbar的字体颜色
+            placeHolderStatusBar.setBackgroundColor(getResources().getColor(R.color.white));
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+    }
+
+    private int getStatusBarHeight() {
+        int height = 0;
+        int resourceId = getApplicationContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            height = getApplicationContext().getResources().getDimensionPixelSize(resourceId);
+        }
+        return height;
     }
 
 }
