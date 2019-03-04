@@ -40,7 +40,7 @@ public class TitleBar extends LinearLayout {
         init(context);
     }
 
-    private void init(Context context) {
+    private void init(final Context context) {
         this.context = context;
         View view = LayoutInflater.from(context).inflate(R.layout.title_bar_layout, this);
         ivBack = view.findViewById(R.id.iv_back);
