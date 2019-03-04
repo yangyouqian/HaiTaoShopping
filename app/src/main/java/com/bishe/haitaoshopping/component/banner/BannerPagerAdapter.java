@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping.component.banner;
+package com.bishe.haitaoshopping.component.banner;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

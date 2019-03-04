@@ -1,5 +1,6 @@
-package com.bishe.yhviews.haitaoshopping.personal;
+package com.bishe.haitaoshopping.personal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bishe.yhviews.haitaoshopping.R;
+import com.avos.avoscloud.AVUser;
+import com.bishe.haitaoshopping.Constant;
+import com.bishe.haitaoshopping.R;
 
 /**
  * Created by yhviews on 2019/3/1.
@@ -35,14 +38,34 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
 
         rlUserInfo.setOnClickListener(this);
         tvExitLogin.setOnClickListener(this);
+        setUserName();
         return view;
+    }
+
+    private void setUserName() {
+        AVUser currentUser = AVUser.getCurrentUser();
+        if (currentUser != null) {
+            tvUserName.setText((CharSequence) currentUser.get(Constant.USER_NAME));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constant.REQUEST_CODE_LOGIN_BACK) {
+            setUserName();
+        }
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.rl_user_info) {
-
+            AVUser currentUser = AVUser.getCurrentUser();
+            if (currentUser == null) {
+                Intent intent = new Intent(this.getActivity(), LoginActivity.class);
+                startActivityForResult(intent, Constant.REQUEST_CODE_LOGIN_BACK);
+            }
         } else if (id == R.id.tv_exit_login) {
 
         }

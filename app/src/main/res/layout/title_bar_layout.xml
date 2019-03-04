@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/place_holder_statusBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:padding="3dp"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/icon_back"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="17sp"
+            android:textColor="#040404" />
+
+        <View
+            android:id="@+id/view_divide"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/tab_divide_line"
+            android:layout_above="@id/tab_layout"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -9,5 +9,12 @@
     <string name="home_fragment_want_buy">想买些啥呢~</string>
     <string name="exit_login">退出登录</string>
     <string name="please_login">请登录</string>
+    <string name="hint_input_email">请输入邮箱账号</string>
+    <string name="click_register">点击注册→</string>
+    <string name="email_verify_to_login">请点击邮件验证后再进行登录~</string>
+    <string name="input_pwd">请输入密码</string>
+    <string name="input_name">请输入用户名(不可更改)</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
 
 </resources>

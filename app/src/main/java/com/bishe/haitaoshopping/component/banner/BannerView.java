@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping.component.banner;
+package com.bishe.haitaoshopping.component.banner;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.bishe.yhviews.haitaoshopping.R;
+import com.bishe.haitaoshopping.R;
 
 import java.util.List;
 

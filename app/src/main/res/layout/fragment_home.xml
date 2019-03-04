@@ -22,7 +22,7 @@
         android:background="@drawable/home_frag_search_edit_text_bg"
         android:text="@string/home_fragment_want_buy"/>
 
-    <com.bishe.yhviews.haitaoshopping.component.banner.BannerView
+    <com.bishe.haitaoshopping.component.banner.BannerView
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
         android:layout_height="150dp" />

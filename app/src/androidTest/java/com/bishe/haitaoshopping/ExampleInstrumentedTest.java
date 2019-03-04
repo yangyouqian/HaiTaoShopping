@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping;
+package com.bishe.haitaoshopping;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.bishe.yhviews.haitaoshopping", appContext.getPackageName());
+        assertEquals("com.bishe.haitaoshopping", appContext.getPackageName());
     }
 }

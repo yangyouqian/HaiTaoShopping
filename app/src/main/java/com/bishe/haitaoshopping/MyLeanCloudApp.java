@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping;
+package com.bishe.haitaoshopping;
 
 import android.app.Application;
 

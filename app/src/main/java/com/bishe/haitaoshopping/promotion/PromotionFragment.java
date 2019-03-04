@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping.message;
+package com.bishe.haitaoshopping.promotion;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,18 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bishe.yhviews.haitaoshopping.R;
+import com.bishe.haitaoshopping.R;
 
 /**
  * Created by yhviews on 2019/3/1.
  */
 
-public class MessageFragment extends Fragment {
+public class PromotionFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message, container, false);
+        View view = inflater.inflate(R.layout.fragment_promotion, container, false);
         return view;
     }
 }

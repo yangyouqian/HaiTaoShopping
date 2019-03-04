@@ -1,4 +1,4 @@
-package com.bishe.yhviews.haitaoshopping.home;
+package com.bishe.haitaoshopping.home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bishe.yhviews.haitaoshopping.R;
-import com.bishe.yhviews.haitaoshopping.component.banner.BannerView;
+import com.bishe.haitaoshopping.R;
+import com.bishe.haitaoshopping.component.banner.BannerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
