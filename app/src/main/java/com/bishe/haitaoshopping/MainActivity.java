@@ -2,6 +2,7 @@ package com.bishe.haitaoshopping;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bishe.haitaoshopping.home.CreateShopActivity;
 import com.bishe.haitaoshopping.home.HomeFragment;
 import com.bishe.haitaoshopping.message.MessageFragment;
 import com.bishe.haitaoshopping.personal.PersonalFragment;
@@ -60,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         initTabLayout();
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CreateShopActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initTabLayout() {
