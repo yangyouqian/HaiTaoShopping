@@ -5,39 +5,307 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.bishe.haitaoshopping.home.CreateShopActivity">
+
     <com.bishe.haitaoshopping.component.titlebar.TitleBar
+        android:id="@+id/create_shop_title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#d43030"
-        android:textSize="14sp"
-        android:text="基础信息:"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="15dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginLeft="36dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#383838"
-            android:layout_marginRight="22dp"
-            android:text="品牌"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="基础信息:"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"
-        android:onClick="add"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="22dp"
+                    android:text="品牌"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_brand"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="4dp"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:background="@drawable/create_shop_et_bg" />
+
+                <Button
+                    android:id="@+id/btn_brand"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/create_shop_et_bg"
+                    android:text="确认"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="22dp"
+                    android:text="网站"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_website"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:textSize="12sp"
+                    android:singleLine="true"
+                    android:background="@drawable/create_shop_et_bg" />
+
+                <Button
+                    android:id="@+id/btn_website"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/create_shop_et_bg"
+                    android:text="确认"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="22dp"
+                    android:text="类型"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_type"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:background="@drawable/create_shop_et_bg" />
+
+                <Button
+                    android:id="@+id/btn_type"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/create_shop_et_bg"
+                    android:text="确认"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="价格信息:"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="22dp"
+                    android:text="快递"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_express"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:background="@drawable/create_shop_et_bg" />
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="16dp"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="22dp"
+                    android:text="折扣"
+                    android:textColor="#383838"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_discount"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="4dp"
+                    android:singleLine="true"
+                    android:textSize="12sp"
+                    android:background="@drawable/create_shop_et_bg" />
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="16dp"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="主标题:"
+                android:maxLines="1"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="4dp"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@drawable/create_shop_et_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="添加种草话语:"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_sub_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="4dp"
+                android:gravity="top"
+                android:textSize="12sp"
+                android:minHeight="90dp"
+                android:background="@drawable/create_shop_et_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="添加种草图片:"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/btn_confirm_create"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="18dp"
+                android:text="确认发起"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:background="#d43030"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

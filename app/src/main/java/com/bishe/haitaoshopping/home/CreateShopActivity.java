@@ -1,21 +1,37 @@
 package com.bishe.haitaoshopping.home;
 
-import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
-import com.bishe.haitaoshopping.model.Shop;
+import com.bishe.haitaoshopping.component.titlebar.TitleBar;
 
 public class CreateShopActivity extends AppCompatActivity {
+
+    private TitleBar titleBar;
+    private EditText etBrand;
+    private EditText etWebSite;
+    private EditText etType;
+    private EditText etExpress;
+    private EditText etDiscount;
+    private EditText etTitle;
+    private EditText etSubtitle;
+
+    private Button btnBrand;
+    private Button btnType;
+    private Button btnWebsite;
+
+    private TextView btnConfirmCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +39,49 @@ public class CreateShopActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_shop);
         Utils.setMStatusStyle(this);
         init();
+        View decorView = getWindow().getDecorView();
+        View contentView = findViewById(Window.ID_ANDROID_CONTENT);
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(getGlobalLayoutListener(decorView, contentView));
+
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener getGlobalLayoutListener(final View decorView, final View contentView) {
+        return new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                decorView.getWindowVisibleDisplayFrame(r);
+
+                int height = decorView.getContext().getResources().getDisplayMetrics().heightPixels;
+                int diff = height - r.bottom;
+
+                if (diff != 0) {
+                    if (contentView.getPaddingBottom() != diff) {
+                        contentView.setPadding(0, 0, 0, diff);
+                    }
+                } else {
+                    if (contentView.getPaddingBottom() != 0) {
+                        contentView.setPadding(0, 0, 0, 0);
+                    }
+                }
+            }
+        };
     }
 
     private void init() {
-
+        titleBar = findViewById(R.id.create_shop_title_bar);
+        etBrand = findViewById(R.id.et_brand);
+        etWebSite = findViewById(R.id.et_website);
+        etType = findViewById(R.id.et_type);
+        etExpress = findViewById(R.id.et_express);
+        etDiscount = findViewById(R.id.et_discount);
+        etTitle = findViewById(R.id.et_title);
+        etSubtitle = findViewById(R.id.et_sub_title);
+        btnBrand = findViewById(R.id.btn_brand);
+        btnType = findViewById(R.id.btn_type);
+        btnWebsite = findViewById(R.id.btn_website);
+        btnConfirmCreate = findViewById(R.id.btn_confirm_create);
+        titleBar.setTitle("发起拼单");
     }
 
     public void add(View view) {

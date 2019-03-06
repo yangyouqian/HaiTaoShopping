@@ -27,6 +27,7 @@
         android:hint="@string/hint_input_email"
         android:textColorHint="#a6a6a6"
         android:textSize="13sp"
+        android:maxLines="1"
         android:background="@null"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="37dp"
@@ -47,6 +48,7 @@
         android:textColorHint="#a6a6a6"
         android:textSize="13sp"
         android:visibility="gone"
+        android:maxLines="1"
         android:background="@null"
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"/>
@@ -68,6 +70,7 @@
         android:textColorHint="#a6a6a6"
         android:textSize="13sp"
         android:background="@null"
+        android:maxLines="1"
         android:inputType="textPassword"
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"/>

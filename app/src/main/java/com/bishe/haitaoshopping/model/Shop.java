@@ -80,11 +80,19 @@ public class Shop extends AVObject {
         return getString("discount");
     }
 
-    public void setOther(String value) {
-        put("other", value);
+    public void setTitle(String value) {
+        put("title", value);
     }
 
-    public String getOther() {
-        return getString("other");
+    public String getTitle() {
+        return getString("title");
+    }
+
+    public void setSubTitle(String value) {
+        put("subTitle", value);
+    }
+
+    public String getSubTitle() {
+        return getString("subTitle");
     }
 }
