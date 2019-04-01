@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    tools:context="com.bishe.haitaoshopping.home.ShopDetailActivity">
+
+    <com.bishe.haitaoshopping.component.titlebar.TitleBar
+        android:id="@+id/shop_detail_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-16dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:maxLines="2"
+                android:textColor="#000000"
+                android:textSize="27sp"
+                tools:text="Mac子弹头8折好价快上车" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    tools:text="我是一个冷漠的杀手" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="21dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="#999999" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    tools:text="01-04 20:01" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@color/text_normal"
+                android:textSize="14sp"
+                tools:text="Mac官网88折优惠，子弹头仅需120包国际不包国内。\nMac官网88折优惠，子弹头仅需120包国际不包国内。" />
+
+            <ImageView
+                android:layout_width="213dp"
+                android:layout_height="297dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
+                android:background="#cacaca" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/icon_like" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="21dp"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    tools:text="11" />
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/icon_favorite" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="21dp"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    tools:text="收藏" />
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:layout_gravity="center"
+                    android:background="@mipmap/icon_report" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="21dp"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    tools:text="举报" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"
+                    tools:text="有1条举报信息\n小仙女们请留意\n正在核实中..." />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="29dp"
+                android:background="@drawable/tv_red_corner_bg"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="进入群聊" />
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="29dp"
+                android:background="@drawable/tv_red_corner_bg"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginLeft="95dp"
+                android:layout_marginTop="-29dp"
+                android:text="参与拼单" />
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/dialog_choose_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_choose_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#d43030" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="11dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:text="已选:"
+                android:gravity="center"
+                android:textColor="#505050"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_selected_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="11dp"
+            android:text="找不到？点击这里添加~"
+            android:textColor="#d76e2a"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_add"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+            <EditText
+                android:id="@+id/et_info"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="12sp"
+                android:paddingLeft="4dp"
+                android:background="@drawable/create_shop_et_bg" />
+            <Button
+                android:id="@+id/btn_add_info"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/create_shop_et_bg"
+                android:text="添加"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            android:text="如填写多个,请使用“,”分割O(∩_∩)O"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="13dp"
+            android:background="#999999" />
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scrollbars="none"
+            android:divider="@null"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#999999" />
+
+        <TextView
+            android:id="@+id/tv_confirm_add"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="#505050"
+            android:textSize="16sp"
+            android:text="确认添加"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

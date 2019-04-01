@@ -3,6 +3,8 @@
     package="com.bishe.haitaoshopping">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 基础模块（必须加入以下声明）START -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,24 +29,25 @@
 
         <!-- 即时通讯模块、推送（均需要加入以下声明） START -->
         <!-- 即时通讯模块、推送都要使用 PushService -->
-        <!-- <service android:name="com.avos.avoscloud.PushService" /> -->
+        <!-- <service andrtitlename="com.avos.avoscloud.PushService" /> -->
 
 
-        <!-- <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver"> -->
+        <!-- <receiver andrtitlename="com.avos.avoscloud.AVBroadcastReceiver"> -->
         <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
-        <!-- <action android:name="android.intent.action.USER_PRESENT" /> -->
-        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
+        <!-- <action andrtitlename="android.intent.action.BOOT_COMPLETED" /> -->
+        <!-- <action andrtitlename="android.intent.action.USER_PRESENT" /> -->
+        <!-- <action andrtitlename="android.net.conn.CONNECTIVITY_CHANGE" /> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
         <!-- 即时通讯模块、推送 END -->
 
 
         <!-- 反馈组件（需要加入以下声明）START -->
-        <!-- <activity android:name="com.avos.avoscloud.feedback.ThreadActivity"></activity> -->
+        <!-- <activity andrtitlename="com.avos.avoscloud.feedback.ThreadActivity"></activity> -->
         <!-- 反馈组件 END -->
         <activity android:name=".personal.LoginActivity" />
-        <activity android:name=".home.CreateShopActivity"></activity>
+        <activity android:name=".home.CreateShopActivity" />
+        <activity android:name=".home.ShopDetailActivity"></activity>
     </application>
 
 </manifest>

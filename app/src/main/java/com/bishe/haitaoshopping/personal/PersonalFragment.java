@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVUser;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
+import com.bishe.haitaoshopping.Utils;
 
 /**
  * Created by yhviews on 2019/3/1.
@@ -46,7 +47,13 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
             tvUserName.setText((CharSequence) currentUser.get(Constant.USER_NAME));
+            tvExitLogin.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void hideUserName() {
+        tvUserName.setText(R.string.please_login);
+        tvExitLogin.setVisibility(View.GONE);
     }
 
     @Override
@@ -61,13 +68,14 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.rl_user_info) {
-            AVUser currentUser = AVUser.getCurrentUser();
-            if (currentUser == null) {
+            if (!Utils.checkLoginState()) {
                 Intent intent = new Intent(this.getActivity(), LoginActivity.class);
                 startActivityForResult(intent, Constant.REQUEST_CODE_LOGIN_BACK);
             }
         } else if (id == R.id.tv_exit_login) {
-
+            AVUser.logOut();
+            Utils.showToast(this.getContext(), "退出登录成功");
+            hideUserName();
         }
     }
 }

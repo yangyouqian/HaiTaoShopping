@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/no_fee_cancel_rule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_report"
+            android:drawablePadding="2dp"
+            android:gravity="center"
+            android:text="oc_penalty_cancel_rule"
+            android:textSize="12sp" />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/no_fee_query_prepay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:singleLine="true"
+            android:visibility="gone"
+            android:gravity="center"
+            android:drawableRight="@mipmap/icon_report"
+            android:drawablePadding="2dp"
+            tools:visibility="visible"
+            tools:text="预付款查询"/>
+    </LinearLayout>
+</LinearLayout>

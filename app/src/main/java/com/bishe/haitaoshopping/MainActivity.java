@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bishe.haitaoshopping.home.CreateShopActivity;
 import com.bishe.haitaoshopping.home.HomeFragment;
 import com.bishe.haitaoshopping.message.MessageFragment;
+import com.bishe.haitaoshopping.personal.LoginActivity;
 import com.bishe.haitaoshopping.personal.PersonalFragment;
 import com.bishe.haitaoshopping.promotion.PromotionFragment;
 
@@ -65,8 +66,14 @@ public class MainActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CreateShopActivity.class);
-                startActivity(intent);
+                if (Utils.checkLoginState()) {
+                    Intent intent = new Intent(MainActivity.this, CreateShopActivity.class);
+                    startActivity(intent);
+                } else {
+                    Utils.showToast(MainActivity.this, "请先登录~");
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yhviews on 2019/3/4.
  * 拼单信息
@@ -94,5 +97,29 @@ public class Shop extends AVObject {
 
     public String getSubTitle() {
         return getString("subTitle");
+    }
+
+    public String getUserId() {
+        return getString("user_id");
+    }
+
+    public void setUserId(String value) {
+        put("user_id", value);
+    }
+
+    public String getUserName() {
+        return getString("user_name");
+    }
+
+    public void setUserName(String value) {
+        put("user_name", value);
+    }
+
+    public void setImageUrlList(List<String> imageUrlList) {
+        put("img_list", imageUrlList);
+    }
+
+    public List getImageUrlList() {
+        return getList("img_list");
     }
 }

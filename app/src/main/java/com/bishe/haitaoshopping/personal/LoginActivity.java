@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void done(AVUser avUser, AVException e) {
                 if (e == null) {
                     Utils.showToast(LoginActivity.this, "登录成功");
+                    finish();
                 } else {
                     Utils.showToast(LoginActivity.this, e.getMessage());
                 }
