@@ -57,7 +57,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginBottom="5dp"
-                android:background="@mipmap/icon_my_create_shop"/>
+                android:background="@drawable/icon_my_create_shop"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginBottom="5dp"
-                android:background="@mipmap/icon_my_join_shop"/>
+                android:background="@drawable/icon_my_join_shop"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_marginBottom="5dp"
-                android:background="@mipmap/icon_history_data"/>
+                android:background="@drawable/icon_history_data"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

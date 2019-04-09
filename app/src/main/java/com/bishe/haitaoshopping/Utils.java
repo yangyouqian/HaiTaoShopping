@@ -14,6 +14,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -95,8 +97,23 @@ public class Utils {
     public static String getUserName() {
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
-            return currentUser.getUsername();
+            //获取用户昵称
+            return (String) currentUser.get("name");
         }
+        return "";
+    }
+
+    public static boolean isCollectionEmpty(Collection collection) {
+        return collection != null && collection.size() > 0;
+    }
+
+    /**
+     * 返回
+     * @param date
+     * @return
+     */
+    public static String formatDate(Date date) {
+
         return "";
     }
 

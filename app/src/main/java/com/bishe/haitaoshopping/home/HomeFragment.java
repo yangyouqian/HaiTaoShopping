@@ -1,6 +1,7 @@
 package com.bishe.haitaoshopping.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,14 +9,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.component.banner.BannerView;
+import com.bishe.haitaoshopping.component.listview.home.HomeShopPoolAdapter;
+import com.bishe.haitaoshopping.model.Shop;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yanghuan
@@ -25,6 +36,12 @@ public class HomeFragment extends Fragment {
 
     private BannerView mBannerView;
     private TextView mTvSearch;
+    private ListView shopPoolListView;
+    private ProgressBar loadingBar;
+    private TextView loadingText;
+
+    private List<Shop> shopList;
+    private HomeShopPoolAdapter mAdapter;
 
     @Nullable
     @Override
@@ -32,12 +49,61 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mTvSearch = view.findViewById(R.id.tv_search);
         mBannerView = view.findViewById(R.id.banner_view);
-
-        initData();
+        shopPoolListView = view.findViewById(R.id.shop_pool_list_view);
+        loadingBar = view.findViewById(R.id.home_progress_bar);
+        loadingText = view.findViewById(R.id.tv_loading_text);
+        initBannerData();
+        initListView();
+        updateListViewData();
         return view;
     }
 
-    private void initData() {
+    private void initListView() {
+        mAdapter = new HomeShopPoolAdapter(getContext());
+        shopPoolListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ShopDetailActivity.class);
+                intent.putExtra("shop", shopList.get(position));
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.REQUEST_CODE_CREATE_SHOP) {
+            if (data != null && data.getBooleanExtra("save", false)) {
+                //如果有保存数据则更新首页listview
+                updateListViewData();
+            }
+        }
+    }
+
+    private void updateListViewData() {
+        shopList = new ArrayList<>();
+        loadingBar.setVisibility(View.VISIBLE);
+        loadingText.setVisibility(View.VISIBLE);
+        AVQuery<Shop> shopQuery = new AVQuery<>("Shop");
+        shopQuery.limit(20);
+        shopQuery.orderByDescending("createdAt");//根据时间降序
+        shopQuery.findInBackground(new FindCallback<Shop>() {
+            @Override
+            public void done(List<Shop> list, AVException e) {
+                loadingBar.setVisibility(View.GONE);
+                loadingText.setVisibility(View.GONE);
+                if (e == null) {
+                    shopList.addAll(list);
+                    mAdapter.update(shopList);
+                    shopPoolListView.setVisibility(View.VISIBLE);
+                    shopPoolListView.setAdapter(mAdapter);
+                }
+            }
+        });
+    }
+
+    private void initBannerData() {
         ArrayList<String> images = new ArrayList<>();
         images.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3778456200,3076998411&fm=23&gp=0.jpg");
         images.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3535338527,4000198595&fm=23&gp=0.jpg");

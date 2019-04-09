@@ -10,12 +10,14 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bishe.haitaoshopping.R;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 
@@ -26,12 +28,13 @@ import java.util.List;
 public class BannerView<T> extends FrameLayout {
 
     private Context mContext;
-    private ViewPager mBannerViewPager;
+    private ViewPagerSlide mBannerViewPager;
     private LinearLayout mIndicatorLayout;
 
     private BannerPagerAdapter mAdapter;
     private Drawable mIndicatorSelectDrawable;
     private Drawable mIndicatorUnSelectDrawable;
+    private ViewPagerScroller mScroller;
 
     private OnPageClickListener mOnPageClickListener;
     private int mBannerCount;
@@ -71,6 +74,11 @@ public class BannerView<T> extends FrameLayout {
         }
         setCurrentItem(0);
         updateIndicator();
+        if (mBannerCount <= 1) {
+            mBannerViewPager.setSlide(false);
+        } else {
+            mBannerViewPager.setSlide(true);
+        }
     }
 
     public void startTurning(long intervalTime) {
@@ -124,7 +132,7 @@ public class BannerView<T> extends FrameLayout {
     }
 
     private void addBannerViewPager() {
-        mBannerViewPager = new ViewPager(mContext);
+        mBannerViewPager = new ViewPagerSlide(mContext);
         mBannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -146,15 +154,29 @@ public class BannerView<T> extends FrameLayout {
 
                 if (state == ViewPager.SCROLL_STATE_IDLE) {//切换已经完成,已滑动到下一个item
                     if (position == 0) {
-                        mBannerViewPager.setCurrentItem(mAdapter.getCount() - 1, true);
+                        mScroller.setSudden(true);
+                        mBannerViewPager.setCurrentItem(mAdapter.getCount() - 2, true);
+                        mScroller.setSudden(false);
                     } else if (position == mAdapter.getCount() - 1) {
+                        mScroller.setSudden(true);
                         mBannerViewPager.setCurrentItem(1, true);
+                        mScroller.setSudden(false);
                     }
                 }
             }
         });
-
+        replaceViewPagerScroll();
         this.addView(mBannerViewPager);
+    }
+
+    private void replaceViewPagerScroll() {
+        try {
+            Field field = ViewPager.class.getDeclaredField("mScroller");
+            field.setAccessible(true);
+            mScroller = new ViewPagerScroller(mContext, new AccelerateInterpolator());
+            field.set(mBannerViewPager, mScroller);
+        } catch (Exception e) {
+        }
     }
 
     private void initIndicator(int bannerCount) {

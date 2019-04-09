@@ -59,7 +59,7 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.REQUEST_CODE_LOGIN_BACK) {
+        if (requestCode == Constant.REQUEST_CODE_LOGIN_BACK) {
             setUserName();
         }
     }

@@ -15,5 +15,6 @@ public class Constant {
     public static final String DB_SHOP_TYPE = "ShopType";
 
     public static final int REQUEST_CODE_LOGIN_BACK = 1;
+    public static final int REQUEST_CODE_CREATE_SHOP = 2;
 
 }

@@ -14,7 +14,7 @@
             android:id="@+id/no_fee_cancel_rule"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/icon_report"
+            android:drawableRight="@drawable/icon_report"
             android:drawablePadding="2dp"
             android:gravity="center"
             android:text="oc_penalty_cancel_rule"
@@ -29,7 +29,7 @@
             android:singleLine="true"
             android:visibility="gone"
             android:gravity="center"
-            android:drawableRight="@mipmap/icon_report"
+            android:drawableRight="@drawable/icon_report"
             android:drawablePadding="2dp"
             tools:visibility="visible"
             tools:text="预付款查询"/>

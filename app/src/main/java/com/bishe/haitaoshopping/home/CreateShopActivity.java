@@ -7,19 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.bishe.haitaoshopping.Constant;
@@ -36,6 +34,7 @@ import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +57,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private int mClickId;
     private GridImageAdapter adapter;
     private List<LocalMedia> selectList = new ArrayList<>();
+    private List<String> imgUrlList = new ArrayList<>();
 
 
 
@@ -185,14 +185,6 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片选择结果回调
                     selectList = PictureSelector.obtainMultipleResult(data);
-                    // 例如 LocalMedia 里面返回三种path
-                    // 1.media.getPath(); 为原图path
-                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
-                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
-                    // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
-                    for (LocalMedia media : selectList) {
-                        Log.i("图片-----》", media.getPath());
-                    }
                     adapter.setList(selectList);
                     adapter.notifyDataSetChanged();
                     break;
@@ -290,19 +282,59 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 });
                 break;
             case R.id.btn_confirm_create:
-                Shop shop = getShop();
-                if (shop != null) {
-                    shop.saveInBackground(new SaveCallback() {
+                addShopInfoToDB();
+                break;
+        }
+    }
+
+    private void addShopInfoToDB() {
+        //先上传图片
+        if (selectList.size() > 0) {
+            progressBar.setVisibility(View.VISIBLE);
+            imgUrlList.clear();
+            for (int i = 0; i < selectList.size(); i++) {
+                try {
+                    String path = selectList.get(i).getPath();
+                    String[] arr = path.split("/");
+                    final AVFile imgFile = AVFile.withAbsoluteLocalPath(arr[arr.length - 1], selectList.get(i).getPath());
+                    final int finalI = i;
+                    imgFile.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(AVException e) {
                             if (e == null) {
-                                finish();
-                                Utils.showToast(CreateShopActivity.this, "添加成功");
+                                imgUrlList.add(imgFile.getUrl());
+                            }
+                            //最后一张图片上传完成,添加商品到数据库中
+                            if (finalI == selectList.size() - 1) {
+                                saveShopInBackground();
                             }
                         }
                     });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-                break;
+            }
+        } else {
+            saveShopInBackground();
+        }
+    }
+
+    private void saveShopInBackground() {
+        Shop shop = getShop();
+        if (shop != null) {
+            shop.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    progressBar.setVisibility(View.GONE);
+                    if (e == null) {
+                        Intent intent = new Intent();
+                        intent.putExtra("save", true);
+                        setResult(Constant.REQUEST_CODE_CREATE_SHOP, intent);
+                        Utils.showToast(CreateShopActivity.this, "添加成功");
+                        finish();
+                    }
+                }
+            });
         }
     }
 
@@ -340,6 +372,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         shop.setSubTitle(subtitle);
         shop.setUserId(Utils.getUserId());
         shop.setUserName(Utils.getUserName());
+        shop.setImageUrlList(imgUrlList);
         return shop;
     }
 }

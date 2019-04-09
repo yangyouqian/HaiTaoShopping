@@ -5,7 +5,10 @@ import android.text.TextUtils;
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -121,5 +124,20 @@ public class Shop extends AVObject {
 
     public List getImageUrlList() {
         return getList("img_list");
+    }
+
+    public String getLikeNum() {
+        return getString("like_num");
+    }
+
+    public String getCreateTime() {
+        Date date = getCreatedAt();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(date);
+    }
+
+    @Override
+    public String toString() {
+        return getTitle() + ", " + getSubTitle() + ", " + getUserName();
     }
 }

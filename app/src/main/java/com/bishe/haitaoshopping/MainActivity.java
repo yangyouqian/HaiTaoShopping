@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (Utils.checkLoginState()) {
                     Intent intent = new Intent(MainActivity.this, CreateShopActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, Constant.REQUEST_CODE_CREATE_SHOP);
                 } else {
                     Utils.showToast(MainActivity.this, "请先登录~");
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -76,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mFragments.get(0).onActivityResult(requestCode, resultCode, data);
     }
 
     private void initTabLayout() {

@@ -6,25 +6,27 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
     tools:context="com.bishe.haitaoshopping.home.ShopDetailActivity">
 
     <com.bishe.haitaoshopping.component.titlebar.TitleBar
         android:id="@+id/shop_detail_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="-16dp" />
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/shop_detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -36,30 +38,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/shop_detail_user_avatar"
                     android:layout_width="38dp"
-                    android:layout_height="38dp" />
+                    android:layout_height="38dp"
+                    android:src="@drawable/icon_default_avatar"/>
 
                 <TextView
+                    android:id="@+id/shop_detail_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/text_normal"
                     android:textSize="14sp"
+                    android:layout_marginLeft="7dp"
                     tools:text="我是一个冷漠的杀手" />
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="21dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:background="#999999" />
 
                 <TextView
+                    android:id="@+id/shop_detail_create_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -69,31 +76,39 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/shop_detail_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-
-            </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp" />
 
             <TextView
+                android:id="@+id/shop_detail_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@color/text_normal"
                 android:textSize="14sp"
+                android:layout_marginTop="6dp"
                 tools:text="Mac官网88折优惠，子弹头仅需120包国际不包国内。\nMac官网88折优惠，子弹头仅需120包国际不包国内。" />
-
-            <ImageView
-                android:layout_width="213dp"
-                android:layout_height="297dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="12dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
+                android:background="#cacaca" />
+
+            <com.bishe.haitaoshopping.component.banner.BannerView
+                android:id="@+id/shop_detail_banner_view"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
                 android:background="#cacaca" />
 
             <LinearLayout
@@ -103,12 +118,13 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:background="@mipmap/icon_like" />
+                    android:background="@drawable/icon_like" />
 
                 <TextView
+                    android:id="@+id/shop_detail_like_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -119,10 +135,10 @@
                     tools:text="11" />
 
                 <ImageView
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:background="@mipmap/icon_favorite" />
+                    android:background="@drawable/icon_favorite" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -132,13 +148,13 @@
                     android:layout_marginRight="21dp"
                     android:textColor="@color/text_normal"
                     android:textSize="14sp"
-                    tools:text="收藏" />
+                    android:text="收藏" />
 
                 <ImageView
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center"
-                    android:background="@mipmap/icon_report" />
+                    android:background="@drawable/icon_report" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -148,7 +164,7 @@
                     android:layout_marginRight="21dp"
                     android:textColor="@color/text_normal"
                     android:textSize="14sp"
-                    tools:text="举报" />
+                    android:text="举报" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -178,8 +194,50 @@
                 android:layout_marginTop="-29dp"
                 android:text="参与拼单" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:textSize="19sp"
+                android:textColor="#383838"
+                android:textStyle="bold"
+                android:text="拼单具体信息"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textColor="#505050"
+                android:textSize="13sp"
+                android:text="已拼人数"/>
 
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#505050"
+                android:textSize="13sp"
+                android:text="目标人数"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:textSize="19sp"
+                android:textColor="#383838"
+                android:textStyle="bold"
+                android:text="小仙女的碎碎念"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#505050"
+                android:textSize="13sp"
+                android:text="不跑单、不骗人、共创和谐社会O(∩_∩)O~~"/>
 
         </LinearLayout>
 
