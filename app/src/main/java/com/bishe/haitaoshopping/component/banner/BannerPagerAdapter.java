@@ -18,13 +18,13 @@ public class BannerPagerAdapter<T> extends PagerAdapter {
 
     private Context mContext;
     private List<T> mData;
-    private BannerView.ViewCreator<T> mViewCreator;
+    private ViewCreator<T> mViewCreator;
 
     private BannerView.OnPageClickListener<T> mOnPageClickListener;
     private SparseArray<View> views = new SparseArray<>();
 
 
-    public BannerPagerAdapter(Context mContext, List<T> mData, BannerView.ViewCreator mViewCreator) {
+    public BannerPagerAdapter(Context mContext, List<T> mData, ViewCreator mViewCreator) {
         this.mContext = mContext;
         this.mData = mData;
         this.mViewCreator = mViewCreator;

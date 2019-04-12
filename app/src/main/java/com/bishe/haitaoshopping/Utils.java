@@ -1,8 +1,12 @@
 package com.bishe.haitaoshopping;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
@@ -103,7 +107,7 @@ public class Utils {
         return "";
     }
 
-    public static boolean isCollectionEmpty(Collection collection) {
+    public static boolean isCollectionHasData(Collection collection) {
         return collection != null && collection.size() > 0;
     }
 
@@ -117,4 +121,27 @@ public class Utils {
         return "";
     }
 
+    public static void doTabStateChangeAnimation(float scale1, float scale2, final TextView tv) {
+        final ValueAnimator valueAnimator = ValueAnimator.ofFloat(scale1, scale2);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float scale = (float) valueAnimator.getAnimatedValue();
+                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, scale);
+            }
+        });
+        valueAnimator.setInterpolator(new LinearInterpolator());
+        valueAnimator.setDuration(180);
+        valueAnimator.start();
+    }
+
+    public static void setBottomTabNormalStyle(Context context, TextView tv) {
+        tv.setTextColor(context.getResources().getColor(R.color.tab_text_normal));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+    }
+
+    public static void setBottomTabSelectedStyle(Context context, TextView tv) {
+        tv.setTextColor(context.getResources().getColor(R.color.tab_text_selected));
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+    }
 }

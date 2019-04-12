@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
+    <android.support.design.widget.TabLayout
+        android:id="@+id/promotion_tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_weight="1"
-            android:id="@+id/no_fee_cancel_rule"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/icon_report"
-            android:drawablePadding="2dp"
-            android:gravity="center"
-            android:text="oc_penalty_cancel_rule"
-            android:textSize="12sp" />
+        app:tabRippleColor="@android:color/transparent"
+        app:tabBackground="@android:color/transparent"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorHeight="1dp"
+        android:layout_height="50dp" />
 
-        <TextView
-            android:id="@+id/no_fee_query_prepay"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="12sp"
-            android:singleLine="true"
-            android:visibility="gone"
-            android:gravity="center"
-            android:drawableRight="@drawable/icon_report"
-            android:drawablePadding="2dp"
-            tools:visibility="visible"
-            tools:text="预付款查询"/>
-    </LinearLayout>
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/promotion_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:indeterminateTint="@color/red" />
+
+    <TextView
+        android:id="@+id/promotion_loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:text="正在拉取数据..."
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/promotion_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:textColor="#666666"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/promotion_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/promotion_tab"/>
+</RelativeLayout>

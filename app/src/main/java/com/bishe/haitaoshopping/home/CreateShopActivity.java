@@ -3,15 +3,20 @@ package com.bishe.haitaoshopping.home;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
@@ -51,6 +56,10 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private ProgressBar progressBar;
     private TextView btnConfirmCreate;
     private RecyclerView addImgRecyclerView;
+    private LinearLayout addPriceContainer;
+    private TextView addPriceBtn;
+    private RelativeLayout addPriceTitle;
+    private View addPriceLine;
 
     private ShopInfoDialogModel model;
     private ChooseDialog mDialog;
@@ -58,6 +67,9 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private GridImageAdapter adapter;
     private List<LocalMedia> selectList = new ArrayList<>();
     private List<String> imgUrlList = new ArrayList<>();
+    private boolean isAdding;//正在输入价格
+    private View currentItemView;
+    private List<String> priceIds;
 
 
 
@@ -108,6 +120,10 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         btnConfirmCreate = findViewById(R.id.btn_confirm_create);
         progressBar = findViewById(R.id.progress_bar);
         addImgRecyclerView = findViewById(R.id.recycler_add_img);
+        addPriceContainer = findViewById(R.id.add_price_container);
+        addPriceBtn = findViewById(R.id.add_price_btn);
+        addPriceTitle = findViewById(R.id.add_price_title);
+        addPriceLine = findViewById(R.id.add_price_divider);
         titleBar.setTitle("发起拼单");
         etBrand.setFocusable(false);
         etWebSite.setFocusable(false);
@@ -122,8 +138,10 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
             }
         });
         btnConfirmCreate.setOnClickListener(this);
+        addPriceBtn.setOnClickListener(this);
 
         model = new ShopInfoDialogModel();
+        priceIds = new ArrayList<>();
         initRecyclerView();
     }
 
@@ -282,8 +300,53 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 });
                 break;
             case R.id.btn_confirm_create:
-                addShopInfoToDB();
+                if (checkInput()) {
+                    addShopInfoToDB();
+                }
                 break;
+            case R.id.add_price_btn:
+                addPrice();
+                break;
+        }
+    }
+
+    private void addPrice() {
+        if (isAdding) {
+            EditText etShopName = currentItemView.findViewById(R.id.et_shop_name);
+            EditText etShopPrice = currentItemView.findViewById(R.id.et_shop_price);
+            EditText etShopNum = currentItemView.findViewById(R.id.et_shop_num);
+            String shopName = etShopName.getText().toString();
+            String shopPrice = etShopPrice.getText().toString();
+            String shopNum = etShopNum.getText().toString();
+            if (!TextUtils.isEmpty(shopName) && !TextUtils.isEmpty(shopPrice)) {
+                final AVObject object = new AVObject(Constant.DB_SHOP_PRICE);
+                object.put("name", shopName);
+                object.put("price", shopPrice);
+                object.put("num", TextUtils.isEmpty(shopNum) ? "无限制" : shopNum);
+                object.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null) {
+                            priceIds.add(object.getObjectId());
+                        }
+                    }
+                });
+                isAdding = false;
+                addPriceBtn.setText(R.string.add_price);
+                etShopName.setEnabled(false);
+                etShopPrice.setEnabled(false);
+                etShopNum.setEnabled(false);
+            } else {
+                Utils.showToast(this, "请输入商品名称和价格~");
+            }
+        } else {
+            addPriceLine.setVisibility(View.VISIBLE);
+            addPriceTitle.setVisibility(View.VISIBLE);
+            currentItemView = LayoutInflater.from(this).inflate(R.layout.item_create_shop_add_price, null);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, Utils.dip2pxInt(this, 35));
+            addPriceContainer.addView(currentItemView, layoutParams);
+            addPriceBtn.setText(R.string.confirm_add_price);
+            isAdding = true;
         }
     }
 
@@ -321,21 +384,47 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
 
     private void saveShopInBackground() {
         Shop shop = getShop();
-        if (shop != null) {
-            shop.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(AVException e) {
-                    progressBar.setVisibility(View.GONE);
-                    if (e == null) {
-                        Intent intent = new Intent();
-                        intent.putExtra("save", true);
-                        setResult(Constant.REQUEST_CODE_CREATE_SHOP, intent);
-                        Utils.showToast(CreateShopActivity.this, "添加成功");
-                        finish();
-                    }
+        shop.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                progressBar.setVisibility(View.GONE);
+                if (e == null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("save", true);
+                    setResult(Constant.REQUEST_CODE_CREATE_SHOP, intent);
+                    Utils.showToast(CreateShopActivity.this, "添加成功");
+                    finish();
                 }
-            });
+            }
+        });
+    }
+
+    private boolean checkInput() {
+        String brand = etBrand.getText().toString();
+        String website = etWebSite.getText().toString();
+        String type = etType.getText().toString();
+        String title = etTitle.getText().toString();
+        if (TextUtils.isEmpty(brand)) {
+            Utils.showToast(this, "请填写品牌信息");
+            return false;
         }
+        if (TextUtils.isEmpty(website)) {
+            Utils.showToast(this, "请填写网站信息(在哪个网站下单)");
+            return false;
+        }
+        if (TextUtils.isEmpty(type)) {
+            Utils.showToast(this, "请填写类型信息");
+            return false;
+        }
+        if (TextUtils.isEmpty(title)) {
+            Utils.showToast(this, "请填写标题信息");
+            return false;
+        }
+        if (!Utils.isCollectionHasData(priceIds)) {
+            Utils.showToast(this, "请添加价格信息");
+            return false;
+        }
+        return true;
     }
 
     private Shop getShop() {
@@ -347,22 +436,6 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         String subtitle = etSubtitle.getText().toString();
         String express = etExpress.getText().toString();
         String discount = etDiscount.getText().toString();
-        if (TextUtils.isEmpty(brand)) {
-            Utils.showToast(this, "请填写品牌信息");
-            return null;
-        }
-        if (TextUtils.isEmpty(website)) {
-            Utils.showToast(this, "请填写网站信息(在哪个网站下单)");
-            return null;
-        }
-        if (TextUtils.isEmpty(type)) {
-            Utils.showToast(this, "请填写类型信息");
-            return null;
-        }
-        if (TextUtils.isEmpty(title)) {
-            Utils.showToast(this, "请填写标题信息");
-            return null;
-        }
         shop.setBrand(brand);
         shop.setWebsite(website);
         shop.setType(type);
@@ -373,6 +446,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         shop.setUserId(Utils.getUserId());
         shop.setUserName(Utils.getUserName());
         shop.setImageUrlList(imgUrlList);
+        shop.setShopPriceList(priceIds);
         return shop;
     }
 }

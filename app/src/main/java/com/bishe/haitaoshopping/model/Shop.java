@@ -126,6 +126,14 @@ public class Shop extends AVObject {
         return getList("img_list");
     }
 
+    public void setShopPriceList(List<String> imageUrlList) {
+        put("price_list", imageUrlList);
+    }
+
+    public List getShopPriceList() {
+        return getList("price_list");
+    }
+
     public String getLikeNum() {
         return getString("like_num");
     }

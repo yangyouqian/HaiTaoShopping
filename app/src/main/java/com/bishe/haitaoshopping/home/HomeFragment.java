@@ -2,10 +2,13 @@ package com.bishe.haitaoshopping.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +19,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.GetDataCallback;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
+import com.bishe.haitaoshopping.Utils;
 import com.bishe.haitaoshopping.component.banner.BannerView;
-import com.bishe.haitaoshopping.component.listview.home.HomeShopPoolAdapter;
+import com.bishe.haitaoshopping.component.banner.ViewCreator;
+import com.bishe.haitaoshopping.component.listview.OnUpdateItemListener;
+import com.bishe.haitaoshopping.component.listview.home.MyAdapter;
+import com.bishe.haitaoshopping.component.listview.home.ViewHolder;
 import com.bishe.haitaoshopping.model.Shop;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,7 +51,7 @@ public class HomeFragment extends Fragment {
     private TextView loadingText;
 
     private List<Shop> shopList;
-    private HomeShopPoolAdapter mAdapter;
+    private MyAdapter mAdapter;
 
     @Nullable
     @Override
@@ -59,7 +69,41 @@ public class HomeFragment extends Fragment {
     }
 
     private void initListView() {
-        mAdapter = new HomeShopPoolAdapter(getContext());
+        mAdapter = new MyAdapter(getContext());
+        mAdapter.setListener(new OnUpdateItemListener() {
+            @Override
+            public void update(final ViewHolder viewHolder, Object item) {
+                if (!(item instanceof Shop)) {
+                    return;
+                }
+                Shop shop = (Shop) item;
+                viewHolder.tvItemTitle.setText(shop.getTitle());
+                viewHolder.tvItemSubTitle.setText(shop.getSubTitle());
+                viewHolder.tvCreateUser.setText(shop.getUserName());
+                viewHolder.tvCreateTime.setText(shop.getCreateTime());
+                viewHolder.tvLikeNum.setText(shop.getLikeNum());
+                if (Utils.isCollectionHasData(shop.getImageUrlList())) {
+                    String thumbnailUrl = (String) shop.getImageUrlList().get(0);
+                    viewHolder.ivThumbnail.setTag(thumbnailUrl);
+                    AVFile file = new AVFile("thumbnail.jpg", thumbnailUrl, new HashMap<String, Object>());
+                    file.getThumbnailUrl(true, 80, 80);
+                    file.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] bytes, AVException e) {
+                            if (e == null) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                String tag = (String) viewHolder.ivThumbnail.getTag();
+                                if (!TextUtils.isEmpty(tag)) {
+                                    viewHolder.ivThumbnail.setImageBitmap(bitmap);
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    viewHolder.ivThumbnail.setTag("");
+                }
+            }
+        });
         shopPoolListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +157,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setBean(final ArrayList<String> beans) {
-        mBannerView.setPages(new BannerView.ViewCreator<String>() {
+        mBannerView.setPages(new ViewCreator<String>() {
             @Override
             public View createView(Context context, int position) {
                 ImageView imageView = new ImageView(context);

@@ -5,6 +5,9 @@
     <string name="tab_promotions">优惠</string>
     <string name="tab_message">消息</string>
     <string name="tab_personal">个人</string>
+    <string name="tab_recommend">最新推荐</string>
+    <string name="tab_make_up">个护化妆</string>
+    <string name="tab_bag">服饰鞋包</string>
 
     <string name="home_fragment_want_buy">想买些啥呢~</string>
     <string name="exit_login">退出登录</string>
@@ -17,5 +20,7 @@
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="choose_dialog_title">选择品牌</string>
+    <string name="confirm_add_price">确认添加</string>
+    <string name="add_price">+ 添加价格</string>
 
 </resources>

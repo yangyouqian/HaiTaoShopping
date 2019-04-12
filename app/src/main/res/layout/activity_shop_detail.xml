@@ -92,11 +92,109 @@
                 android:layout_marginTop="6dp"
                 tools:text="Mac官网88折优惠，子弹头仅需120包国际不包国内。\nMac官网88折优惠，子弹头仅需120包国际不包国内。" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#d43030"
+                    android:textSize="15sp"
+                    android:text="快递:"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="6dp"
+                    android:text="包国际不包国内"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#d43030"
+                    android:textSize="13sp"
+                    android:text="折扣:"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="6dp"
+                    android:text="买一送一"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/shop_detail_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#d43030"
+                android:textSize="15sp"
+                android:visibility="visible"
+                android:layout_marginTop="5dp"
+                android:text="价格明细:"/>
+
+            <RelativeLayout
+                android:id="@+id/shop_detail_show_price_title"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="6dp"
+                    android:text="商品"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_centerInParent="true"
+                    android:text="价格"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_marginRight="6dp"
+                    android:layout_alignParentRight="true"
+                    android:text="库存"/>
+            </RelativeLayout>
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#cacaca" />
+                android:id="@+id/shop_detail_show_price_divider"
+                android:layout_width="300dp"
+                android:layout_height="0.5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:background="#cacaca"/>
+
+            <LinearLayout
+                android:id="@+id/shop_detail_show_price_container"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"/>
 
             <com.bishe.haitaoshopping.component.banner.BannerView
                 android:id="@+id/shop_detail_banner_view"
@@ -203,23 +301,52 @@
                 android:textStyle="bold"
                 android:text="拼单具体信息"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:textColor="#505050"
-                android:textSize="13sp"
-                android:text="已拼人数"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:text="已拼人数"/>
+
+                <TextView
+                    android:id="@+id/shop_detail_pool_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="6dp"
+                    android:text="1"/>
+            </LinearLayout>
 
 
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="#505050"
-                android:textSize="13sp"
-                android:text="目标人数"/>
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:text="目标人数"/>
+
+                <TextView
+                    android:id="@+id/shop_detail_aim_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#505050"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="6dp"
+                    android:text="5"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

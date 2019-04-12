@@ -30,7 +30,6 @@ public class TitleFragmentPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         if (position < mFragmentList.size()){
             fragment = mFragmentList.get(position);
-
         }else{
             fragment = mFragmentList.get(0);
 

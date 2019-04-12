@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="#cacaca"/>
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#cacaca"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="#cacaca"/>
+
+    <EditText
+        android:id="@+id/et_shop_name"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="商品名称"
+        android:maxLines="1"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/et_shop_price"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:hint="单位:元"
+        android:background="@null"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/et_shop_num"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="13sp"
+        android:background="@null"
+        android:hint="不填为无限制"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

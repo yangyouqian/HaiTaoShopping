@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,15 +18,16 @@ import android.widget.TextView;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.GetDataCallback;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
 import com.bishe.haitaoshopping.component.banner.BannerView;
+import com.bishe.haitaoshopping.component.banner.ViewCreator;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
 import com.bishe.haitaoshopping.model.Shop;
-import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +42,8 @@ public class ShopDetailActivity extends AppCompatActivity {
     private TextView tvLikeNum;
     private TitleBar titleBar;
     private BannerView bannerView;
+    private LinearLayout showPriceContainer;
+
     private Shop mShop;
 
     @Override
@@ -65,6 +69,7 @@ public class ShopDetailActivity extends AppCompatActivity {
         tvLikeNum = findViewById(R.id.shop_detail_like_num);
         titleBar = findViewById(R.id.shop_detail_title_bar);
         bannerView = findViewById(R.id.shop_detail_banner_view);
+        showPriceContainer = findViewById(R.id.shop_detail_show_price_container);
     }
 
     private void initData() {
@@ -87,6 +92,39 @@ public class ShopDetailActivity extends AppCompatActivity {
         tagContainer.addView(buildTextView("#" + mShop.getType()));
         tagContainer.addView(buildTextView("#" + mShop.getWebSite()));
         setBean(mShop.getImageUrlList());
+        showPrice();
+    }
+
+    private void showPrice() {
+        List<String> priceList = mShop.getShopPriceList();
+        if (Utils.isCollectionHasData(priceList)) {
+            final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, Utils.dip2pxInt(this, 35));
+            for (String priceId : priceList) {
+                AVQuery<AVObject> avQuery = new AVQuery<>("ShopPrice");
+                avQuery.getInBackground(priceId, new GetCallback<AVObject>() {
+                    @Override
+                    public void done(AVObject avObject, AVException e) {
+                        if (e == null) {
+                            String name = avObject.getString("name");
+                            String num = avObject.getString("num");
+                            String price = avObject.getString("price");
+                            showPriceContainer.addView(buildPriceItemView(name, num, price), layoutParams);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private View buildPriceItemView(String name, String num, String price) {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_shop_detail_show_price, null);
+        TextView tvShopName = view.findViewById(R.id.tv_shop_name);
+        tvShopName.setText(name);
+        TextView tvShopNum = view.findViewById(R.id.tv_shop_num);
+        tvShopNum.setText(num);
+        TextView tvShopPrice = view.findViewById(R.id.tv_shop_price);
+        tvShopPrice.setText(price);
+        return view;
     }
 
     private TextView buildTextView(String text) {
@@ -105,27 +143,31 @@ public class ShopDetailActivity extends AppCompatActivity {
     }
 
     private void setBean(final List<String> beans) {
-        bannerView.setPages(new BannerView.ViewCreator<String>() {
-            @Override
-            public View createView(Context context, int position) {
-                ImageView imageView = new ImageView(context);
+        if (Utils.isCollectionHasData(beans)) {
+            bannerView.setPages(new ViewCreator<String>() {
+                @Override
+                public View createView(Context context, int position) {
+                    ImageView imageView = new ImageView(context);
 //                imageView.setScaleType(ImageView.ScaleType.CENTER);
-                return imageView;
-            }
+                    return imageView;
+                }
 
-            @Override
-            public void updateUI(Context context, final View view, int position, String entity) {
-                AVFile file = new AVFile("img.jpg", entity, new HashMap<String, Object>());
-                file.getDataInBackground(new GetDataCallback() {
-                    @Override
-                    public void done(byte[] bytes, AVException e) {
-                        if (e == null) {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            ((ImageView)view).setImageBitmap(bitmap);
+                @Override
+                public void updateUI(Context context, final View view, int position, String entity) {
+                    AVFile file = new AVFile("img.jpg", entity, new HashMap<String, Object>());
+                    file.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] bytes, AVException e) {
+                            if (e == null) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                ((ImageView)view).setImageBitmap(bitmap);
+                            }
                         }
-                    }
-                });
-            }
-        }, beans);
+                    });
+                }
+            }, beans);
+        } else {
+            bannerView.setVisibility(View.GONE);
+        }
     }
 }

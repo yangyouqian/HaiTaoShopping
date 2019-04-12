@@ -38,4 +38,5 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-sdk:v4.7.9'
     compile 'cn.leancloud.android:avoscloud-statistics:v4.7.9'
     implementation files('libs/pinyin4j-2.5.0.jar')
+    implementation("com.squareup.okhttp3:okhttp:3.4.1")
 }

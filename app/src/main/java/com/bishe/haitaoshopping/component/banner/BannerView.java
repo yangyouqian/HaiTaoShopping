@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
@@ -219,9 +218,4 @@ public class BannerView<T> extends FrameLayout {
         void onPageClick(int position, T t);
     }
 
-    public interface ViewCreator<T> {
-        View createView(Context context, int position);
-
-        void updateUI(Context context, View view, int position, T t);
-    }
 }
