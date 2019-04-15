@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.bishe.haitaoshopping.promotion.PromotionDetailActivity">
+
+    <com.bishe.haitaoshopping.component.titlebar.TitleBar
+        android:id="@+id/promotion_detail_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/promotion_detail_title_bar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/promotion_detail_top_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/promotion_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:maxLines="2"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                tools:text="Mac子弹头8折好价快上车" />
+
+            <TextView
+                android:id="@+id/promotion_detail_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_d43030"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="6dp"
+                tools:text="补货2678日元"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="8dp"
+                android:orientation="horizontal">
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/shop_detail_user_avatar"-->
+                    <!--android:layout_width="18dp"-->
+                    <!--android:layout_height="18dp"-->
+                    <!--android:src="@drawable/icon_default_avatar"/>-->
+
+                <TextView
+                    android:id="@+id/promotion_detail_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_normal"
+                    android:textSize="14sp"
+                    android:layout_marginRight="8dp"
+                    tools:text="我是一个冷漠的杀手" />
+
+                <View
+                    android:id="@+id/promotion_detail_divider"
+                    android:layout_width="1dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:background="#999999" />
+
+                <TextView
+                    android:id="@+id/promotion_detail_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/text_normal"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="14sp"
+                    tools:text="01-04 20:01" />
+            </LinearLayout>
+
+            <WebView
+                android:id="@+id/web_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/promotion_detail_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/red" />
+
+    <TextView
+        android:id="@+id/promotion_detail_loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="正在拉取数据..."
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:layout_marginTop="4dp"
+        android:layout_below="@id/promotion_detail_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:textColor="#666666"/>
+</RelativeLayout>

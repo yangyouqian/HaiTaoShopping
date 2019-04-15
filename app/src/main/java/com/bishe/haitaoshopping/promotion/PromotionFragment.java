@@ -1,6 +1,7 @@
 package com.bishe.haitaoshopping.promotion;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +33,9 @@ import com.bishe.haitaoshopping.model.UrlModel;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,6 +152,9 @@ public class PromotionFragment extends Fragment implements ViewCreator {
             viewHolder.tvItemSubTitle.setTextColor(getContext().getResources().getColor(R.color.color_d43030));
             viewHolder.tvCreateUser.setText(info.mallName);
             viewHolder.tvLikeNum.setText(info.likeNum);
+            Date date = new Date(info.deadline);
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            viewHolder.tvCreateTime.setText(sdf.format(date));
             String url = info.imgUrl;
             if (!TextUtils.isEmpty(url)) {
                 Glide.with(getContext()).load(url).into(viewHolder.ivThumbnail);
@@ -192,6 +199,7 @@ public class PromotionFragment extends Fragment implements ViewCreator {
             public void onFailure(Call call, IOException e) {
 
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -210,12 +218,22 @@ public class PromotionFragment extends Fragment implements ViewCreator {
     }
 
     @Override
-    public View createView(Context context, int position) {
+    public View createView(Context context, final int po) {
         ListView view = new ListView(context);
         view.setDivider(null);
         view.setVerticalScrollBarEnabled(false);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(layoutParams);
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BaseModel model = promotionData.get(po);
+                PromotionInfo info = (PromotionInfo) model.infoList.get(position);
+                Intent intent = new Intent(getActivity(), PromotionDetailActivity.class);
+                intent.putExtra("info_id", info.id);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -231,16 +249,13 @@ public class PromotionFragment extends Fragment implements ViewCreator {
             adapterMap.put(position, mAdapter);
             ((ListView) view).setAdapter(mAdapter);
         }
-        if (o instanceof UrlModel) {
+        if (promotionData.get(position) != null) {
+            mAdapter.update(promotionData.get(position).infoList);
+        } else {
             UrlModel urlModel = (UrlModel) o;
             String url = urlModel.url;
             String type = urlModel.type;
-            if (promotionData.get(position) != null) {
-                mAdapter.update(promotionData.get(position).infoList);
-            } else {
-                Log.d("adapter", "getInfoData " + position);
-                getInfoData(url, type, position);
-            }
+            getInfoData(url, type, position);
         }
     }
 }

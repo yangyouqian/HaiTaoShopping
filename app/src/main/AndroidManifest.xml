@@ -47,7 +47,8 @@
         <!-- 反馈组件 END -->
         <activity android:name=".personal.LoginActivity" />
         <activity android:name=".home.CreateShopActivity" />
-        <activity android:name=".home.ShopDetailActivity"></activity>
+        <activity android:name=".home.ShopDetailActivity" />
+        <activity android:name=".promotion.PromotionDetailActivity"></activity>
     </application>
 
 </manifest>
