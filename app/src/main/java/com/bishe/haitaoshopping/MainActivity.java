@@ -15,6 +15,9 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.bishe.haitaoshopping.home.CreateShopActivity;
 import com.bishe.haitaoshopping.home.HomeFragment;
 import com.bishe.haitaoshopping.message.MessageFragment;
@@ -24,6 +27,9 @@ import com.bishe.haitaoshopping.promotion.PromotionFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 import static com.bishe.haitaoshopping.Constant.DEFAULT_SELECT_TAB_INDEX;
 
@@ -45,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         setStatusBar(this);
+        login();
+    }
+
+    /**
+     * 如果用户已登录, 连接即时通讯服务区
+     */
+    private void login() {
+        if (Utils.checkLoginState()) {
+            LCChatKit.getInstance().open(Utils.getUserName(), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {}
+            });
+        }
     }
 
     private void init() {
@@ -118,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         mFragments = new ArrayList<>();
         mFragments.add(new HomeFragment());
         mFragments.add(new PromotionFragment());
-        mFragments.add(new MessageFragment());
+        mFragments.add(new LCIMConversationListFragment());
         mFragments.add(new PersonalFragment());
     }
 

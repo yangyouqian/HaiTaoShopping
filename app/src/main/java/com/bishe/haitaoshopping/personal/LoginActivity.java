@@ -1,5 +1,6 @@
 package com.bishe.haitaoshopping.personal;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,11 +13,16 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.avos.avoscloud.SignUpCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.MainActivity;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
+
+import cn.leancloud.chatkit.LCChatKit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -122,8 +128,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void done(AVUser avUser, AVException e) {
                 if (e == null) {
-                    Utils.showToast(LoginActivity.this, "登录成功");
-                    finish();
+                    // 通过用户昵称获取clientId进行"登录",与服务器连接
+                    LCChatKit.getInstance().open(avUser.getString("name"), new AVIMClientCallback() {
+                        @Override
+                        public void done(AVIMClient avimClient, AVIMException e) {
+                            Utils.showToast(LoginActivity.this, "登录成功");
+                            finish();
+                        }
+                    });
                 } else {
                     Utils.showToast(LoginActivity.this, e.getMessage());
                 }

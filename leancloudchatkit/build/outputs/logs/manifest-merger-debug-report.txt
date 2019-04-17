@@ -1,0 +1,143 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+	package
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:3:11-41
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:1-57:12
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:5:5-66
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:6:5-80
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:6:22-78
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:7:5-78
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:7:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:8:5-75
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:8:22-73
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:9:5-70
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:9:22-68
+uses-permission#android.permission.READ_LOGS
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:10:5-67
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:10:22-65
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:11:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:12:5-65
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:12:22-63
+uses-feature#android.hardware.camera
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:14:5-16:34
+	android:required
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:16:9-32
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:15:9-47
+application
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:18:5-55:19
+activity#cn.leancloud.chatkit.activity.LCIMConversationActivity
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:19:9-27:20
+	android:launchMode
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:21:13-44
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:20:13-62
+intent-filter#action:name:cn.leancloud.chatkit.conversation_item_click_action+category:name:android.intent.category.DEFAULT
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:22:13-26:29
+action#cn.leancloud.chatkit.conversation_item_click_action
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:23:17-93
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:23:25-91
+category#android.intent.category.DEFAULT
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:25:17-75
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:25:27-73
+activity#cn.leancloud.chatkit.activity.LCIMImageActivity
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:28:9-63
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:28:19-61
+receiver#com.avos.avoscloud.AVBroadcastReceiver
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:30:9-36:20
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:30:19-72
+intent-filter#action:name:android.intent.action.BOOT_COMPLETED+action:name:android.intent.action.USER_PRESENT+action:name:android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:31:13-35:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:32:17-78
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:32:25-76
+action#android.intent.action.USER_PRESENT
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:33:17-76
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:33:25-74
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:34:17-78
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:34:25-76
+provider#android.support.v4.content.FileProvider
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:38:9-47:20
+	android:grantUriPermissions
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:42:13-47
+	android:authorities
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:40:13-60
+	android:exported
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:39:13-67
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:43:13-46:25
+	android:resource
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:45:17-51
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:44:17-67
+service#com.avos.avoscloud.PushService
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:49:9-65
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:49:18-63
+activity#cn.leancloud.chatkit.activity.LCIMConversationDetailActivity
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:51:9-52:20
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:51:19-74
+activity#cn.leancloud.chatkit.activity.LCIMUserSelectActivity
+ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:53:9-54:20
+	android:name
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml:53:19-66
+uses-sdk
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		ADDED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml
+		INJECTED from /Users/didi/Desktop/Project/HaiTaoShopping/leancloudchatkit/src/main/AndroidManifest.xml

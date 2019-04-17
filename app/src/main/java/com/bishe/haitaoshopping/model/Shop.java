@@ -148,4 +148,12 @@ public class Shop extends AVObject {
     public String toString() {
         return getTitle() + ", " + getSubTitle() + ", " + getUserName();
     }
+
+    public String getConversationId() {
+        return getString("cov_id");
+    }
+
+    public void setConversationId(String covId) {
+        put("cov_id", covId);
+    }
 }

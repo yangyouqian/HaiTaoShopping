@@ -13,9 +13,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
+
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
+import cn.leancloud.chatkit.event.LoginOutEvent;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by yhviews on 2019/3/1.
@@ -74,7 +84,13 @@ public class PersonalFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.tv_exit_login) {
             AVUser.logOut();
-            Utils.showToast(this.getContext(), "退出登录成功");
+            LCChatKit.getInstance().close(new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    Utils.showToast(getContext(), "退出登录成功");
+                    EventBus.getDefault().post(new LoginOutEvent());
+                }
+            });
             hideUserName();
         }
     }

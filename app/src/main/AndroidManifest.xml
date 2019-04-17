@@ -29,16 +29,14 @@
 
         <!-- 即时通讯模块、推送（均需要加入以下声明） START -->
         <!-- 即时通讯模块、推送都要使用 PushService -->
-        <!-- <service andrtitlename="com.avos.avoscloud.PushService" /> -->
-
-
-        <!-- <receiver andrtitlename="com.avos.avoscloud.AVBroadcastReceiver"> -->
-        <!-- <intent-filter> -->
-        <!-- <action andrtitlename="android.intent.action.BOOT_COMPLETED" /> -->
-        <!-- <action andrtitlename="android.intent.action.USER_PRESENT" /> -->
-        <!-- <action andrtitlename="android.net.conn.CONNECTIVITY_CHANGE" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
+        <service android:name="com.avos.avoscloud.PushService"/>
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <!-- 即时通讯模块、推送 END -->
 
 

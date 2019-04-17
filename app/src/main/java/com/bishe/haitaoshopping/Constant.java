@@ -40,7 +40,13 @@ public class Constant {
 
     public static final int REQUEST_CODE_LOGIN_BACK = 1;
     public static final int REQUEST_CODE_CREATE_SHOP = 2;
+    public static final int REQUEST_CODE_CREATE_CHAT = 3;
 
     public static final int DEFAULT_SELECT_TAB_INDEX = 0;
+
+    public static final String HEADER_PARAM_ID = "X-LC-Id";
+    public static final String HEADER_VALUE_ID = "KY3ey67wou6y9lq4qMja1BOg-gzGzoHsz";
+    public static final String HEADER_PARAM_KEY= "X-LC-Key";
+    public static final String HEADER_VALUE_KEY= "ncWRgQRlYdRLDrXg1VKBgFAL";
 
 }

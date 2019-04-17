@@ -3,6 +3,7 @@ package com.bishe.haitaoshopping;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVUser;
+import com.bishe.haitaoshopping.personal.LoginActivity;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -88,6 +90,11 @@ public class Utils {
     public static boolean checkLoginState() {
         AVUser currentUser = AVUser.getCurrentUser();
         return currentUser != null;
+    }
+
+    public static void jumpToLoginActivity(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 
     public static String getUserId() {

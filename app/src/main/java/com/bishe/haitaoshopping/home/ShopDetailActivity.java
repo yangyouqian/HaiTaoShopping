@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,17 +23,30 @@ import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.GetDataCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
+import com.bishe.haitaoshopping.Constant;
+import com.bishe.haitaoshopping.MainActivity;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
 import com.bishe.haitaoshopping.component.banner.BannerView;
 import com.bishe.haitaoshopping.component.banner.ViewCreator;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
 import com.bishe.haitaoshopping.model.Shop;
+import com.bishe.haitaoshopping.personal.LoginActivity;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShopDetailActivity extends AppCompatActivity {
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.utils.LCIMConstants;
+
+public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tvTitle;
     private TextView tvSubTitle;
@@ -41,6 +56,9 @@ public class ShopDetailActivity extends AppCompatActivity {
     private LinearLayout tagContainer;
     private TextView tvLikeNum;
     private TitleBar titleBar;
+    private TextView tvDiscountTitle;
+    private TextView tvDiscountContent;
+    private TextView tvJoinChat;
     private BannerView bannerView;
     private LinearLayout showPriceContainer;
 
@@ -70,6 +88,9 @@ public class ShopDetailActivity extends AppCompatActivity {
         titleBar = findViewById(R.id.shop_detail_title_bar);
         bannerView = findViewById(R.id.shop_detail_banner_view);
         showPriceContainer = findViewById(R.id.shop_detail_show_price_container);
+        tvDiscountContent = findViewById(R.id.shop_detail_discount_content);
+        tvDiscountTitle = findViewById(R.id.shop_detail_discount_title);
+        tvJoinChat = findViewById(R.id.shop_detail_join_chat);
     }
 
     private void initData() {
@@ -82,12 +103,21 @@ public class ShopDetailActivity extends AppCompatActivity {
         tvCreateTime.setText(mShop.getCreateTime());
         tvLikeNum.setText(mShop.getLikeNum());
         titleBar.setTitle("拼单信息详情");
+        if (!TextUtils.isEmpty(mShop.getDiscount())) {
+            tvDiscountContent.setVisibility(View.VISIBLE);
+            tvDiscountTitle.setVisibility(View.VISIBLE);
+            tvDiscountTitle.setText(mShop.getDiscount());
+        } else {
+            tvDiscountTitle.setVisibility(View.GONE);
+            tvDiscountContent.setVisibility(View.GONE);
+        }
         titleBar.setOnBackClickListener(new TitleBar.OnBackClickListener() {
             @Override
             public void onClick() {
                 finish();
             }
         });
+        tvJoinChat.setOnClickListener(this);
         tagContainer.addView(buildTextView("#" + mShop.getBrand()));
         tagContainer.addView(buildTextView("#" + mShop.getType()));
         tagContainer.addView(buildTextView("#" + mShop.getWebSite()));
@@ -160,7 +190,7 @@ public class ShopDetailActivity extends AppCompatActivity {
                         public void done(byte[] bytes, AVException e) {
                             if (e == null) {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                                ((ImageView)view).setImageBitmap(bitmap);
+                                ((ImageView) view).setImageBitmap(bitmap);
                             }
                         }
                     });
@@ -168,6 +198,56 @@ public class ShopDetailActivity extends AppCompatActivity {
             }, beans);
         } else {
             bannerView.setVisibility(View.GONE);
+        }
+    }
+
+    private void jumpToConversationActivity() {
+        Intent intent = new Intent(ShopDetailActivity.this, LCIMConversationActivity.class);
+        if (TextUtils.isEmpty(mShop.getConversationId())) {
+            intent.putExtra(LCIMConstants.PEER_ID, mShop.getUserName());
+        } else {
+            intent.putExtra(LCIMConstants.CONVERSATION_ID, mShop.getConversationId());
+        }
+        intent.putExtra("cov_name", "群" + mShop.getTitle());
+        startActivityForResult(intent, Constant.REQUEST_CODE_CREATE_CHAT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.REQUEST_CODE_CREATE_CHAT:
+                    if (data != null && TextUtils.isEmpty(mShop.getConversationId())) {
+                        String covId = data.getStringExtra("cov_id");
+                        mShop.setConversationId(covId);
+                        mShop.saveInBackground();
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.shop_detail_join_chat) {
+            if (!Utils.checkLoginState()) {
+                Utils.showToast(this, "请先登录~");
+                Utils.jumpToLoginActivity(this);
+                return;
+            }
+            if (LCChatKit.getInstance().getClient() == null) {
+                LCChatKit.getInstance().open(Utils.getUserName(), new AVIMClientCallback() {
+                    @Override
+                    public void done(AVIMClient avimClient, AVIMException e) {
+                        if (e == null) {
+                            jumpToConversationActivity();
+                        }
+                    }
+                });
+            } else {
+                jumpToConversationActivity();
+            }
         }
     }
 }
