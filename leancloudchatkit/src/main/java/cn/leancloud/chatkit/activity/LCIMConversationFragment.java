@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -110,6 +111,18 @@ public class LCIMConversationFragment extends Fragment {
         inputBottomBar = (LCIMInputBottomBar) view.findViewById(R.id.fragment_chat_inputbottombar);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+        inputBottomBar.setListener(new LCIMInputBottomBar.OnInputListener() {
+            @Override
+            public void onInput() {
+                //弹起键盘时,将聊天记录定位到最下方
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        layoutManager.scrollToPositionWithOffset(itemAdapter.getItemCount() - 1, 0);
+                    }
+                }, 150);
+            }
+        });
 
 
         itemAdapter = getAdpter();

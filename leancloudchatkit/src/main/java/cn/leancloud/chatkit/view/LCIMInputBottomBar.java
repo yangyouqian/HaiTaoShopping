@@ -28,233 +28,256 @@ import de.greenrobot.event.EventBus;
  */
 public class LCIMInputBottomBar extends LinearLayout {
 
-  /**
-   * 加号 Button
-   */
-  private View actionBtn;
+    /**
+     * 加号 Button
+     */
+    private View actionBtn;
 
-  /**
-   * 文本输入框
-   */
-  private EditText contentEditText;
+    /**
+     * 文本输入框
+     */
+    private EditText contentEditText;
 
-  /**
-   * 发送文本的Button
-   */
-  private View sendTextBtn;
+    /**
+     * 发送文本的Button
+     */
+    private View sendTextBtn;
 
-  /**
-   * 切换到语音输入的 Button
-   */
-  private View voiceBtn;
+    /**
+     * 切换到语音输入的 Button
+     */
+    private View voiceBtn;
 
-  /**
-   * 切换到文本输入的 Button
-   */
-  private View keyboardBtn;
+    /**
+     * 切换到文本输入的 Button
+     */
+    private View keyboardBtn;
 
-  /**
-   * 底部的layout，包含 emotionLayout 与 actionLayout
-   */
-  private View moreLayout;
+    /**
+     * 底部的layout，包含 emotionLayout 与 actionLayout
+     */
+    private View moreLayout;
 
-  /**
-   * 录音按钮
-   */
-  private LCIMRecordButton recordBtn;
+    /**
+     * 录音按钮
+     */
+    private LCIMRecordButton recordBtn;
 
-  /**
-   * action layout
-   */
-  private LinearLayout actionLayout;
-  private View cameraBtn;
-  private View pictureBtn;
+    /**
+     * action layout
+     */
+    private LinearLayout actionLayout;
+    private View cameraBtn;
+    private View pictureBtn;
 
-  /**
-   * 最小间隔时间为 1 秒，避免多次点击
-   */
-  private final int MIN_INTERVAL_SEND_MESSAGE = 1000;
+    private OnInputListener listener;
 
-  public LCIMInputBottomBar(Context context) {
-    super(context);
-    initView(context);
-  }
+    /**
+     * 最小间隔时间为 1 秒，避免多次点击
+     */
+    private final int MIN_INTERVAL_SEND_MESSAGE = 1000;
 
-  public LCIMInputBottomBar(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    initView(context);
-  }
+    public LCIMInputBottomBar(Context context) {
+        super(context);
+        initView(context);
+    }
 
-
-  /**
-   * 隐藏底部的图片、emtion 等 layout
-   */
-  public void hideMoreLayout() {
-    moreLayout.setVisibility(View.GONE);
-  }
+    public LCIMInputBottomBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
+    }
 
 
-  private void initView(Context context) {
-    View.inflate(context, R.layout.lcim_chat_input_bottom_bar_layout, this);
-    actionBtn = findViewById(R.id.input_bar_btn_action);
-    contentEditText = (EditText) findViewById(R.id.input_bar_et_content);
-    sendTextBtn = findViewById(R.id.input_bar_btn_send_text);
-    voiceBtn = findViewById(R.id.input_bar_btn_voice);
-    keyboardBtn = findViewById(R.id.input_bar_btn_keyboard);
-    moreLayout = findViewById(R.id.input_bar_layout_more);
-    recordBtn = (LCIMRecordButton) findViewById(R.id.input_bar_btn_record);
-
-    actionLayout = (LinearLayout) findViewById(R.id.input_bar_layout_action);
-    cameraBtn = findViewById(R.id.input_bar_btn_camera);
-    pictureBtn = findViewById(R.id.input_bar_btn_picture);
-
-    setEditTextChangeListener();
-    initRecordBtn();
-
-    actionBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        boolean showActionView =
-          (GONE == moreLayout.getVisibility() || GONE == actionLayout.getVisibility());
-        moreLayout.setVisibility(showActionView ? VISIBLE : GONE);
-        actionLayout.setVisibility(showActionView ? VISIBLE : GONE);
-        LCIMSoftInputUtils.hideSoftInput(getContext(), contentEditText);
-      }
-    });
-
-    contentEditText.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
+    /**
+     * 隐藏底部的图片、emtion 等 layout
+     */
+    public void hideMoreLayout() {
         moreLayout.setVisibility(View.GONE);
-        LCIMSoftInputUtils.showSoftInput(getContext(), contentEditText);
-      }
-    });
+    }
 
-    keyboardBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        showTextLayout();
-      }
-    });
 
-    voiceBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        showAudioLayout();
-      }
-    });
+    private void initView(Context context) {
+        View.inflate(context, R.layout.lcim_chat_input_bottom_bar_layout, this);
+        actionBtn = findViewById(R.id.input_bar_btn_action);
+        contentEditText = (EditText) findViewById(R.id.input_bar_et_content);
+        sendTextBtn = findViewById(R.id.input_bar_btn_send_text);
+        voiceBtn = findViewById(R.id.input_bar_btn_voice);
+        keyboardBtn = findViewById(R.id.input_bar_btn_keyboard);
+        moreLayout = findViewById(R.id.input_bar_layout_more);
+        recordBtn = (LCIMRecordButton) findViewById(R.id.input_bar_btn_record);
 
-    sendTextBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        String content = contentEditText.getText().toString();
-        if (TextUtils.isEmpty(content)) {
-          Toast.makeText(getContext(), R.string.lcim_message_is_null, Toast.LENGTH_SHORT).show();
-          return;
-        }
+        actionLayout = (LinearLayout) findViewById(R.id.input_bar_layout_action);
+        cameraBtn = findViewById(R.id.input_bar_btn_camera);
+        pictureBtn = findViewById(R.id.input_bar_btn_picture);
 
-        contentEditText.setText("");
-        new Handler().postDelayed(new Runnable() {
-          @Override
-          public void run() {
-            sendTextBtn.setEnabled(true);
-          }
-        }, MIN_INTERVAL_SEND_MESSAGE);
+        setEditTextChangeListener();
+        initRecordBtn();
 
-        EventBus.getDefault().post(
-          new LCIMInputBottomBarTextEvent(LCIMInputBottomBarEvent.INPUTBOTTOMBAR_SEND_TEXT_ACTION,
-            content, getTag()));
-      }
-    });
+        actionBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean showActionView =
+                        (GONE == moreLayout.getVisibility() || GONE == actionLayout.getVisibility());
+                moreLayout.setVisibility(showActionView ? VISIBLE : GONE);
+                actionLayout.setVisibility(showActionView ? VISIBLE : GONE);
+                LCIMSoftInputUtils.hideSoftInput(getContext(), contentEditText);
+            }
+        });
 
-    pictureBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        EventBus.getDefault().post(new LCIMInputBottomBarEvent(
-          LCIMInputBottomBarEvent.INPUTBOTTOMBAR_IMAGE_ACTION, getTag()));
-      }
-    });
+        contentEditText.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moreLayout.setVisibility(View.GONE);
+                if (listener != null) {
+                    listener.onInput();
+                }
+            }
+        });
 
-    cameraBtn.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        EventBus.getDefault().post(new LCIMInputBottomBarEvent(
-          LCIMInputBottomBarEvent.INPUTBOTTOMBAR_CAMERA_ACTION, getTag()));
-      }
-    });
-  }
+        contentEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    if (listener != null) {
+                        listener.onInput();
+                    }
+                }
+            }
+        });
 
-  public void addActionView(View view) {
-    actionLayout.addView(view);
-  }
+        keyboardBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTextLayout();
+            }
+        });
 
-  /**
-   * 初始化录音按钮
-   */
-  private void initRecordBtn() {
-    recordBtn.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
-    recordBtn.setRecordEventListener(new LCIMRecordButton.RecordEventListener() {
-      @Override
-      public void onFinishedRecord(final String audioPath, int secs) {
-        if (secs > 0)
-        EventBus.getDefault().post(
-          new LCIMInputBottomBarRecordEvent(
-            LCIMInputBottomBarEvent.INPUTBOTTOMBAR_SEND_AUDIO_ACTION, audioPath, secs, getTag()));
+        voiceBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAudioLayout();
+            }
+        });
+
+        sendTextBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = contentEditText.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    Toast.makeText(getContext(), R.string.lcim_message_is_null, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                contentEditText.setText("");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendTextBtn.setEnabled(true);
+                    }
+                }, MIN_INTERVAL_SEND_MESSAGE);
+
+                EventBus.getDefault().post(
+                        new LCIMInputBottomBarTextEvent(LCIMInputBottomBarEvent.INPUTBOTTOMBAR_SEND_TEXT_ACTION,
+                                content, getTag()));
+            }
+        });
+
+        pictureBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LCIMInputBottomBarEvent(
+                        LCIMInputBottomBarEvent.INPUTBOTTOMBAR_IMAGE_ACTION, getTag()));
+            }
+        });
+
+        cameraBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LCIMInputBottomBarEvent(
+                        LCIMInputBottomBarEvent.INPUTBOTTOMBAR_CAMERA_ACTION, getTag()));
+            }
+        });
+    }
+
+    public void setListener(OnInputListener listener) {
+        this.listener = listener;
+    }
+
+    public void addActionView(View view) {
+        actionLayout.addView(view);
+    }
+
+    /**
+     * 初始化录音按钮
+     */
+    private void initRecordBtn() {
         recordBtn.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
-      }
+        recordBtn.setRecordEventListener(new LCIMRecordButton.RecordEventListener() {
+            @Override
+            public void onFinishedRecord(final String audioPath, int secs) {
+                if (secs > 0)
+                    EventBus.getDefault().post(
+                            new LCIMInputBottomBarRecordEvent(
+                                    LCIMInputBottomBarEvent.INPUTBOTTOMBAR_SEND_AUDIO_ACTION, audioPath, secs, getTag()));
+                recordBtn.setSavePath(LCIMPathUtils.getRecordPathByCurrentTime(getContext()));
+            }
 
-      @Override
-      public void onStartRecord() {
-      }
-    });
-  }
+            @Override
+            public void onStartRecord() {
+            }
+        });
+    }
 
-  /**
-   * 展示文本输入框及相关按钮，隐藏不需要的按钮及 layout
-   */
-  private void showTextLayout() {
-    contentEditText.setVisibility(View.VISIBLE);
-    recordBtn.setVisibility(View.GONE);
-    voiceBtn.setVisibility(contentEditText.getText().length() > 0 ? GONE : VISIBLE);
-    sendTextBtn.setVisibility(contentEditText.getText().length() > 0 ? VISIBLE : GONE);
-    keyboardBtn.setVisibility(View.GONE);
-    moreLayout.setVisibility(View.GONE);
-    contentEditText.requestFocus();
-    LCIMSoftInputUtils.showSoftInput(getContext(), contentEditText);
-  }
+    /**
+     * 展示文本输入框及相关按钮，隐藏不需要的按钮及 layout
+     */
+    private void showTextLayout() {
+        contentEditText.setVisibility(View.VISIBLE);
+        recordBtn.setVisibility(View.GONE);
+        voiceBtn.setVisibility(contentEditText.getText().length() > 0 ? GONE : VISIBLE);
+        sendTextBtn.setVisibility(contentEditText.getText().length() > 0 ? VISIBLE : GONE);
+        keyboardBtn.setVisibility(View.GONE);
+        moreLayout.setVisibility(View.GONE);
+        contentEditText.requestFocus();
+        LCIMSoftInputUtils.showSoftInput(getContext(), contentEditText);
+    }
 
-  /**
-   * 展示录音相关按钮，隐藏不需要的按钮及 layout
-   */
-  private void showAudioLayout() {
-    contentEditText.setVisibility(View.GONE);
-    recordBtn.setVisibility(View.VISIBLE);
-    voiceBtn.setVisibility(GONE);
-    keyboardBtn.setVisibility(VISIBLE);
-    moreLayout.setVisibility(View.GONE);
-    LCIMSoftInputUtils.hideSoftInput(getContext(), contentEditText);
-  }
+    /**
+     * 展示录音相关按钮，隐藏不需要的按钮及 layout
+     */
+    private void showAudioLayout() {
+        contentEditText.setVisibility(View.GONE);
+        recordBtn.setVisibility(View.VISIBLE);
+        voiceBtn.setVisibility(GONE);
+        keyboardBtn.setVisibility(VISIBLE);
+        moreLayout.setVisibility(View.GONE);
+        LCIMSoftInputUtils.hideSoftInput(getContext(), contentEditText);
+    }
 
-  /**
-   * 设置 text change 事件，有文本时展示发送按钮，没有文本时展示切换语音的按钮
-   */
-  private void setEditTextChangeListener() {
-    contentEditText.addTextChangedListener(new TextWatcher() {
-      @Override
-      public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-      }
+    /**
+     * 设置 text change 事件，有文本时展示发送按钮，没有文本时展示切换语音的按钮
+     */
+    private void setEditTextChangeListener() {
+        contentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            }
 
-      @Override
-      public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-        boolean showSend = charSequence.length() > 0;
-        keyboardBtn.setVisibility(!showSend ? View.VISIBLE : GONE);
-        sendTextBtn.setVisibility(showSend ? View.VISIBLE : GONE);
-        voiceBtn.setVisibility(View.GONE);
-      }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                boolean showSend = charSequence.length() > 0;
+                keyboardBtn.setVisibility(!showSend ? View.VISIBLE : GONE);
+                sendTextBtn.setVisibility(showSend ? View.VISIBLE : GONE);
+                voiceBtn.setVisibility(View.GONE);
+            }
 
-      @Override
-      public void afterTextChanged(Editable editable) {
-      }
-    });
-  }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+    }
+
+    public interface OnInputListener {
+        void onInput();
+    }
 }

@@ -42,7 +42,6 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
     protected LCIMConversationFragment conversationFragment;
     private ImageView ivBack;
     private TextView tvTitle;
-    private View placeHolderStatusBar;
     private String covId;
 
 
@@ -52,8 +51,6 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
         setContentView(R.layout.lcim_conversation_activity);
         ivBack = findViewById(R.id.iv_back);
         tvTitle = findViewById(R.id.tv_title);
-        placeHolderStatusBar = findViewById(R.id.place_holder_statusBar);
-        initPlaceHolder();
         ivBack.setOnClickListener(this);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         conversationFragment = (LCIMConversationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chat);
@@ -65,18 +62,6 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         initByIntent(intent);
-    }
-
-    private void initPlaceHolder() {
-        placeHolderStatusBar.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) placeHolderStatusBar.getLayoutParams();
-        int height = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            height = getResources().getDimensionPixelSize(resourceId);
-        }
-        lp.height = height;
-        placeHolderStatusBar.setLayoutParams(lp);
     }
 
     private void initByIntent(Intent intent) {
