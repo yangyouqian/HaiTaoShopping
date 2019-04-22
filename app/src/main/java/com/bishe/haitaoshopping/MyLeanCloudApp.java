@@ -4,9 +4,9 @@ import android.app.Application;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
+import com.bishe.haitaoshopping.chatkit.LCChatKit;
 import com.bishe.haitaoshopping.model.Shop;
 
-import cn.leancloud.chatkit.LCChatKit;
 
 /**
  * Created by yhviews on 2019/3/1.

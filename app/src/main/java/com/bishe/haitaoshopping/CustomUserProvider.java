@@ -4,21 +4,21 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.FindCallback;
+import com.bishe.haitaoshopping.chatkit.LCChatKitUser;
+import com.bishe.haitaoshopping.chatkit.LCChatProfileProvider;
+import com.bishe.haitaoshopping.chatkit.LCChatProfilesCallBack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.leancloud.chatkit.LCChatKitUser;
-import cn.leancloud.chatkit.LCChatProfileProvider;
-import cn.leancloud.chatkit.LCChatProfilesCallBack;
 
 /**
  * Created by yhviews on 2019/4/15.
  */
 
-public class CustomUserProvider implements LCChatProfileProvider{
+public class CustomUserProvider implements LCChatProfileProvider {
     private static CustomUserProvider customUserProvider;
 
     public synchronized static CustomUserProvider getInstance() {

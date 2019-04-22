@@ -1,13 +1,11 @@
 package com.bishe.haitaoshopping.personal;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
@@ -17,12 +15,11 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.bishe.haitaoshopping.Constant;
-import com.bishe.haitaoshopping.MainActivity;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
+import com.bishe.haitaoshopping.chatkit.LCChatKit;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
 
-import cn.leancloud.chatkit.LCChatKit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

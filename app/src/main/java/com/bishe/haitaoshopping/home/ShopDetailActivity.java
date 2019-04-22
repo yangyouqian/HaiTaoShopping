@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -24,27 +24,22 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.GetDataCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.bishe.haitaoshopping.Constant;
-import com.bishe.haitaoshopping.MainActivity;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
+import com.bishe.haitaoshopping.chatkit.LCChatKit;
+import com.bishe.haitaoshopping.chatkit.activity.LCIMConversationActivity;
+import com.bishe.haitaoshopping.chatkit.utils.LCIMConstants;
 import com.bishe.haitaoshopping.component.banner.BannerView;
 import com.bishe.haitaoshopping.component.banner.ViewCreator;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
 import com.bishe.haitaoshopping.model.Shop;
-import com.bishe.haitaoshopping.personal.LoginActivity;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.leancloud.chatkit.LCChatKit;
-import cn.leancloud.chatkit.activity.LCIMConversationActivity;
-import cn.leancloud.chatkit.utils.LCIMConstants;
 
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
 

@@ -18,9 +18,10 @@ import android.widget.TextView;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.bishe.haitaoshopping.chatkit.LCChatKit;
+import com.bishe.haitaoshopping.chatkit.activity.LCIMConversationListFragment;
 import com.bishe.haitaoshopping.home.CreateShopActivity;
 import com.bishe.haitaoshopping.home.HomeFragment;
-import com.bishe.haitaoshopping.message.MessageFragment;
 import com.bishe.haitaoshopping.personal.LoginActivity;
 import com.bishe.haitaoshopping.personal.PersonalFragment;
 import com.bishe.haitaoshopping.promotion.PromotionFragment;
@@ -28,8 +29,6 @@ import com.bishe.haitaoshopping.promotion.PromotionFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.leancloud.chatkit.LCChatKit;
-import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 import static com.bishe.haitaoshopping.Constant.DEFAULT_SELECT_TAB_INDEX;
 

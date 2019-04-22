@@ -14,17 +14,14 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.bishe.haitaoshopping.Constant;
 import com.bishe.haitaoshopping.R;
 import com.bishe.haitaoshopping.Utils;
+import com.bishe.haitaoshopping.chatkit.LCChatKit;
+import com.bishe.haitaoshopping.chatkit.event.LoginOutEvent;
 
-import cn.leancloud.chatkit.LCChatKit;
-import cn.leancloud.chatkit.event.LCIMIMTypeMessageEvent;
-import cn.leancloud.chatkit.event.LoginOutEvent;
 import de.greenrobot.event.EventBus;
 
 /**

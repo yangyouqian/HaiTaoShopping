@@ -41,5 +41,11 @@ dependencies {
     compile 'cn.leancloud.android:avoscloud-statistics:v4.7.9'
     implementation files('libs/pinyin4j-2.5.0.jar')
     implementation("com.squareup.okhttp3:okhttp:3.4.1")
-    compile project(":leancloudchatkit")
+    compile 'com.github.stuxuhai:jpinyin:1.0'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'de.greenrobot:eventbus:2.4.0'
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+
 }
