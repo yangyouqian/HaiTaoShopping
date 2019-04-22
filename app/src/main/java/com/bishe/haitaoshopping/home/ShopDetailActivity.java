@@ -208,6 +208,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         } else {
             intent.putExtra(LCIMConstants.CONVERSATION_ID, mShop.getConversationId());
         }
+        intent.putExtra("shop_id", mShop.getObjectId());
         intent.putExtra("cov_name", "群" + mShop.getTitle());
         startActivityForResult(intent, Constant.REQUEST_CODE_CREATE_CHAT);
     }

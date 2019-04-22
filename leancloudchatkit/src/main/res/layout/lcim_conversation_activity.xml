@@ -37,6 +37,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/cov_detail_shop_container"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_margin="8dp"

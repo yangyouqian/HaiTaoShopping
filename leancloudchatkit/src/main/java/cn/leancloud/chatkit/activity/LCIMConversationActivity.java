@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVCallback;
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMChatRoom;
@@ -42,7 +47,13 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
     protected LCIMConversationFragment conversationFragment;
     private ImageView ivBack;
     private TextView tvTitle;
+    private ImageView ivThumbnail;
+    private TextView itemTvTitle;
+    private TextView itemTvSubTitle;
+    private TextView tvDetail;
     private String covId;
+    private RelativeLayout detailShopContainer;
+    private String shopId;
 
 
     @Override
@@ -51,6 +62,11 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
         setContentView(R.layout.lcim_conversation_activity);
         ivBack = findViewById(R.id.iv_back);
         tvTitle = findViewById(R.id.tv_title);
+        ivThumbnail = findViewById(R.id.iv_thumbnail);
+        itemTvTitle = findViewById(R.id.item_tv_title);
+        itemTvSubTitle = findViewById(R.id.item_tv_subtitle);
+        tvDetail = findViewById(R.id.tv_detail);
+        detailShopContainer = findViewById(R.id.cov_detail_shop_container);
         ivBack.setOnClickListener(this);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         conversationFragment = (LCIMConversationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_chat);
@@ -82,25 +98,12 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
                 showToast("memberId or conversationId is needed");
                 finish();
             }
+            shopId = extras.getString("shop_id");
         }
     }
 
-    /**
-     * 设置 actionBar title 以及 up 按钮事件
-     *
-     * @param title
-     */
     protected void initActionBar(String title) {
         tvTitle.setText(title);
-//        ActionBar actionBar = getSupportActionBar();
-//        if (null != actionBar) {
-//            if (null != title) {
-//                actionBar.setTitle(title);
-//            }
-//            actionBar.setDisplayUseLogoEnabled(false);
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            finishActivity(RESULT_OK);
-//        }
     }
 
     @Override
@@ -129,18 +132,44 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
                 initActionBar(covName);
             } else {
                 initActionBar(conversation.getName());
-//                LCIMConversationUtils.getConversationName(conversation, new AVCallback<String>() {
-//                    @Override
-//                    protected void internalDone0(String s, AVException e) {
-//                        if (null != e) {
-//                            LCIMLogUtils.logException(e);
-//                        } else {
-//                            initActionBar(s);
-//                        }
-//                    }
-//                });
             }
+            boolean sys = false;
+            if (conversation.get("sys") != null) {
+                sys = (boolean) conversation.get("sys");
+            }
+            if (sys) {
+                detailShopContainer.setVisibility(View.GONE);
+            }
+            if (TextUtils.isEmpty(shopId)) {
+                shopId = (String) conversation.get("shop_id");
+            }
+            initShop(conversation);
         }
+    }
+
+    private void initShop(AVIMConversation conversation) {
+        if (TextUtils.isEmpty(shopId)) {
+           return;
+        }
+        AVQuery<AVObject> avQuery = new AVQuery<>("Shop");
+        avQuery.whereEqualTo("objectId", shopId);
+        avQuery.findInBackground(new FindCallback<AVObject>() {
+            @Override
+            public void done(List<AVObject> list, AVException e) {
+
+            }
+        });
+    }
+
+    private void setShop(String url, String title, String subTitle) {
+        itemTvTitle.setText(title);
+        itemTvSubTitle.setText(subTitle);
+        tvDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**

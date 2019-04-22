@@ -1,6 +1,7 @@
 package cn.leancloud.chatkit.event;
 
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 
 /**
@@ -9,5 +10,6 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
  */
 public class LCIMIMTypeMessageEvent {
   public AVIMTypedMessage message;
+  public AVIMMessage messageSys;
   public AVIMConversation conversation;
 }

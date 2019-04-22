@@ -17,31 +17,33 @@ import cn.leancloud.chatkit.R;
  */
 public class LCIMChatItemTextHolder extends LCIMChatItemHolder {
 
-  protected TextView contentView;
+    protected TextView contentView;
 
-  public LCIMChatItemTextHolder(Context context, ViewGroup root, boolean isLeft) {
-    super(context, root, isLeft);
-  }
-
-  @Override
-  public void initView() {
-    super.initView();
-    if (isLeft) {
-      conventLayout.addView(View.inflate(getContext(), R.layout.lcim_chat_item_left_text_layout, null));
-      contentView = (TextView) itemView.findViewById(R.id.chat_left_text_tv_content);
-    } else {
-      conventLayout.addView(View.inflate(getContext(), R.layout.lcim_chat_item_right_text_layout, null));
-      contentView = (TextView) itemView.findViewById(R.id.chat_right_text_tv_content);
+    public LCIMChatItemTextHolder(Context context, ViewGroup root, boolean isLeft) {
+        super(context, root, isLeft);
     }
-  }
 
-  @Override
-  public void bindData(Object o) {
-    super.bindData(o);
-    AVIMMessage message = (AVIMMessage) o;
-    if (message instanceof AVIMTextMessage) {
-      AVIMTextMessage textMessage = (AVIMTextMessage) message;
-      contentView.setText(textMessage.getText());
+    @Override
+    public void initView() {
+        super.initView();
+        if (isLeft) {
+            conventLayout.addView(View.inflate(getContext(), R.layout.lcim_chat_item_left_text_layout, null));
+            contentView = (TextView) itemView.findViewById(R.id.chat_left_text_tv_content);
+        } else {
+            conventLayout.addView(View.inflate(getContext(), R.layout.lcim_chat_item_right_text_layout, null));
+            contentView = (TextView) itemView.findViewById(R.id.chat_right_text_tv_content);
+        }
     }
-  }
+
+    @Override
+    public void bindData(Object o) {
+        super.bindData(o);
+        AVIMMessage message = (AVIMMessage) o;
+        if (message instanceof AVIMTextMessage) {
+            AVIMTextMessage textMessage = (AVIMTextMessage) message;
+            contentView.setText(textMessage.getText());
+        } else {
+            contentView.setText(message.getContent());
+        }
+    }
 }

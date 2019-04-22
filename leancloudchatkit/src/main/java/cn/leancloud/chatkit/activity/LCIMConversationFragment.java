@@ -25,8 +25,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -208,6 +206,14 @@ public class LCIMConversationFragment extends Fragment {
     public void setConversation(final AVIMConversation conversation) {
         imConversation = conversation;
         refreshLayout.setEnabled(true);
+        boolean sys = false;
+        if (conversation.get("sys") != null) {
+            sys = (boolean) conversation.get("sys");
+        }
+        if (sys) {
+            //系统对话不需要底部输入框
+            inputBottomBar.setVisibility(View.GONE);
+        }
         inputBottomBar.setTag(imConversation.getConversationId());
         fetchMessages();
         imConversation.read();
@@ -275,7 +281,11 @@ public class LCIMConversationFragment extends Fragment {
             if (imConversation.getUnreadMessagesCount() > 0) {
                 paddingNewMessage(imConversation);
             } else {
-                itemAdapter.addMessage(messageEvent.message);
+                if (messageEvent.message == null) {
+                    itemAdapter.addMessage(messageEvent.messageSys);
+                } else {
+                    itemAdapter.addMessage(messageEvent.message);
+                }
                 itemAdapter.notifyDataSetChanged();
                 scrollToBottom();
             }

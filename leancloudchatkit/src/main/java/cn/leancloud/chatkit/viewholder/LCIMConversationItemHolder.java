@@ -96,16 +96,6 @@ public class LCIMConversationItemHolder extends LCIMCommonViewHolder {
                 updateName(conversation);
                 updateIcon(conversation);
             }
-
-//            if (conversation instanceof AVIMServiceConversation) {
-//                typeView.setText("S");
-//            } else if (conversation instanceof AVIMTemporaryConversation) {
-//                typeView.setText("T");
-//            } else if (conversation instanceof AVIMChatRoom) {
-//                typeView.setText("R");
-//            } else {
-//                typeView.setText("C");
-//            }
             updateUnreadCount(conversation);
             updateLastMessage(conversation.getLastMessage());
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +131,7 @@ public class LCIMConversationItemHolder extends LCIMCommonViewHolder {
         timeView.setText("");
         messageView.setText("");
 //        typeView.setText("");
-        unreadView.setVisibility(View.GONE);
+        unreadView.setVisibility(View.INVISIBLE);
     }
 
     /**

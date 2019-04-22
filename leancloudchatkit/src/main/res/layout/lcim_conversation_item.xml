@@ -10,8 +10,8 @@
 
     <RelativeLayout
         android:id="@+id/conversation_item_layout_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="50dp"
+        android:layout_height="50dp">
 
 
         <ImageView
@@ -22,12 +22,11 @@
 
         <TextView
             android:id="@+id/conversation_item_tv_unread"
-            android:layout_width="wrap_content"
+            android:layout_width="13dp"
             android:layout_height="13dp"
-            android:layout_marginRight="1dp"
-            android:layout_toRightOf="@id/conversation_item_iv_avatar"
             android:background="@drawable/lcim_read_badge"
             android:gravity="center"
+            android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
             android:textSize="10sp"/>
     </RelativeLayout>

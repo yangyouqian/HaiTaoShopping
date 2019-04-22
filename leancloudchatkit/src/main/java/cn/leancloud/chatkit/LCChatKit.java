@@ -17,6 +17,7 @@ import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
 import cn.leancloud.chatkit.cache.LCIMConversationItemCache;
 import cn.leancloud.chatkit.cache.LCIMProfileCache;
+import cn.leancloud.chatkit.handler.CustomMessageHandler;
 import cn.leancloud.chatkit.handler.LCIMClientEventHandler;
 import cn.leancloud.chatkit.handler.LCIMConversationHandler;
 import cn.leancloud.chatkit.handler.LCIMMessageHandler;
@@ -60,6 +61,7 @@ public final class LCChatKit {
 
         // 消息处理 handler
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new LCIMMessageHandler(context));
+        AVIMMessageManager.registerDefaultMessageHandler(new CustomMessageHandler());
 
         // 与网络相关的 handler
         AVIMClient.setClientEventHandler(LCIMClientEventHandler.getInstance());
