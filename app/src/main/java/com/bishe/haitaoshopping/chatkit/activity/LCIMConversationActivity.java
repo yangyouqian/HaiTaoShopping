@@ -1,6 +1,8 @@
 package com.bishe.haitaoshopping.chatkit.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -12,19 +14,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.GetCallback;
+import com.avos.avoscloud.GetDataCallback;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMTemporaryConversation;
+import com.avos.avoscloud.im.v2.callback.AVIMConversationCallback;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationCreatedCallback;
 import com.bishe.haitaoshopping.R;
+import com.bishe.haitaoshopping.Utils;
 import com.bishe.haitaoshopping.chatkit.LCChatKit;
 import com.bishe.haitaoshopping.chatkit.cache.LCIMConversationItemCache;
 import com.bishe.haitaoshopping.chatkit.utils.LCIMConstants;
+import com.bishe.haitaoshopping.home.ShopDetailActivity;
+import com.bishe.haitaoshopping.model.Shop;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -44,7 +53,7 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
     private TextView tvDetail;
     private String covId;
     private RelativeLayout detailShopContainer;
-    private String shopId;
+    private Shop mShop;
 
 
     @Override
@@ -80,6 +89,9 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
 
         Bundle extras = intent.getExtras();
         if (null != extras) {
+            if (extras.containsKey("shop")) {
+                mShop = extras.getParcelable("shop");
+            }
             if (extras.containsKey(LCIMConstants.PEER_ID)) {
                 getConversation(extras.getString(LCIMConstants.PEER_ID), extras.getString("cov_name"));
             } else if (extras.containsKey(LCIMConstants.CONVERSATION_ID)) {
@@ -89,7 +101,6 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
                 showToast("memberId or conversationId is needed");
                 finish();
             }
-            shopId = extras.getString("shop_id");
         }
     }
 
@@ -131,26 +142,64 @@ public class LCIMConversationActivity extends AppCompatActivity implements View.
             if (sys) {
                 detailShopContainer.setVisibility(View.GONE);
             }
-            if (TextUtils.isEmpty(shopId)) {
-                shopId = (String) conversation.get("shop_id");
+            if (mShop != null) {
+                buildShop(mShop);
+                Object shopId = conversation.get("shop_id");
+                if (shopId == null) {
+                    conversation.set("shop_id", mShop.getObjectId());
+                    conversation.updateInfoInBackground(new AVIMConversationCallback() {
+                        @Override
+                        public void done(AVIMException e) {
+
+                        }
+                    });
+                }
+            } else {
+                String id = (String) conversation.get("shop_id");
+                if (TextUtils.isEmpty(id)) {
+                    return;
+                }
+                AVQuery<Shop> query = new AVQuery<>("Shop");
+                query.getInBackground(id, new GetCallback<Shop>() {
+                    @Override
+                    public void done(Shop shop, AVException e) {
+                        if (e == null) {
+                            mShop = shop;
+                            buildShop(mShop);
+                        }
+                    }
+                });
             }
-            initShop(conversation);
         }
     }
 
-    private void initShop(AVIMConversation conversation) {
-        if (TextUtils.isEmpty(shopId)) {
-           return;
+    private void buildShop(final Shop shop) {
+        itemTvTitle.setText(shop.getTitle());
+        itemTvSubTitle.setText(shop.getSubTitle());
+        if (Utils.isCollectionHasData(shop.getImageUrlList())) {
+            String thumbnailUrl = (String) shop.getImageUrlList().get(0);
+            AVFile file = new AVFile("thumbnail.jpg", thumbnailUrl, new HashMap<String, Object>());
+            file.getThumbnailUrl(true, 80, 80);
+            file.getDataInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] bytes, AVException e) {
+                    if (e == null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        ivThumbnail.setImageBitmap(bitmap);
+                    }
+                }
+            });
         }
-        AVQuery<AVObject> avQuery = new AVQuery<>("Shop");
-        avQuery.whereEqualTo("objectId", shopId);
-        avQuery.findInBackground(new FindCallback<AVObject>() {
+        tvDetail.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void done(List<AVObject> list, AVException e) {
-
+            public void onClick(View v) {
+                Intent intent = new Intent(LCIMConversationActivity.this, ShopDetailActivity.class);
+                intent.putExtra("shop", shop);
+                startActivity(intent);
             }
         });
     }
+
 
     private void setShop(String url, String title, String subTitle) {
         itemTvTitle.setText(title);

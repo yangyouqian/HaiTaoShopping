@@ -286,6 +286,7 @@
                 android:text="进入群聊" />
 
             <TextView
+                android:id="@+id/shop_detail_join_shop"
                 android:layout_width="75dp"
                 android:layout_height="29dp"
                 android:background="@drawable/tv_red_corner_bg"

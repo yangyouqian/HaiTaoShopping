@@ -6,6 +6,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.bishe.haitaoshopping.chatkit.LCChatKit;
 import com.bishe.haitaoshopping.model.Shop;
+import com.bishe.haitaoshopping.model.ShopPrice;
 
 
 /**
@@ -22,6 +23,7 @@ public class MyLeanCloudApp extends Application {
         super.onCreate();
 
         AVObject.registerSubclass(Shop.class);
+        AVObject.registerSubclass(ShopPrice.class);
         LCChatKit.getInstance().setProfileProvider(CustomUserProvider.getInstance());
         LCChatKit.getInstance().init(getApplicationContext(), APP_ID, APP_KEY);
         AVOSCloud.setDebugLogEnabled(true);

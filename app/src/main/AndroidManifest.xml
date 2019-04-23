@@ -29,11 +29,12 @@
 
         <!-- 即时通讯模块、推送（均需要加入以下声明） START -->
         <!-- 即时通讯模块、推送都要使用 PushService -->
-        <service android:name="com.avos.avoscloud.PushService"/>
+        <service android:name="com.avos.avoscloud.PushService" />
+
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
@@ -46,23 +47,23 @@
         <activity android:name=".personal.LoginActivity" />
         <activity android:name=".home.CreateShopActivity" />
         <activity android:name=".home.ShopDetailActivity" />
-        <activity android:name=".promotion.PromotionDetailActivity"></activity>
+        <activity android:name=".promotion.PromotionDetailActivity" />
         <activity
             android:name=".chatkit.activity.LCIMConversationActivity"
             android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="cn.leancloud.chatkit.conversation_item_click_action"/>
+                <action android:name="cn.leancloud.chatkit.conversation_item_click_action" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".chatkit.activity.LCIMImageActivity"/>
+        <activity android:name=".chatkit.activity.LCIMImageActivity" />
 
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
@@ -73,16 +74,14 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
 
-        <service android:name="com.avos.avoscloud.PushService"/>
+        <service android:name="com.avos.avoscloud.PushService" />
 
-        <activity android:name=".chatkit.activity.LCIMConversationDetailActivity">
-        </activity>
-        <activity android:name=".chatkit.activity.LCIMUserSelectActivity">
-        </activity>
+        <activity android:name=".chatkit.activity.LCIMConversationDetailActivity"></activity>
+        <activity android:name=".chatkit.activity.LCIMUserSelectActivity"></activity>
+        <activity android:name=".home.JoinShopActivity"></activity>
     </application>
 
 </manifest>

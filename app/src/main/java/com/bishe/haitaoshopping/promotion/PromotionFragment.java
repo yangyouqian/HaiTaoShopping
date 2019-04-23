@@ -73,7 +73,9 @@ public class PromotionFragment extends Fragment implements ViewCreator {
             if (msg.what == MSG_UPDATE) {
                 BaseModel model = (BaseModel) msg.obj;
                 if (Utils.isCollectionHasData(model.infoList)) {
-                    adapterMap.get(msg.arg1).update(model.infoList);
+                    if (adapterMap.get(msg.arg1) != null) {
+                        adapterMap.get(msg.arg1).update(model.infoList);
+                    }
                 }
 //                loadingTextView.setVisibility(View.GONE);
 //                progressBar.setVisibility(View.GONE);

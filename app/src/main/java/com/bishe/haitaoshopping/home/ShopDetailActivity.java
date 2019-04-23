@@ -54,6 +54,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView tvDiscountTitle;
     private TextView tvDiscountContent;
     private TextView tvJoinChat;
+    private TextView tvJoinShop;
     private BannerView bannerView;
     private LinearLayout showPriceContainer;
 
@@ -86,6 +87,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         tvDiscountContent = findViewById(R.id.shop_detail_discount_content);
         tvDiscountTitle = findViewById(R.id.shop_detail_discount_title);
         tvJoinChat = findViewById(R.id.shop_detail_join_chat);
+        tvJoinShop = findViewById(R.id.shop_detail_join_shop);
     }
 
     private void initData() {
@@ -113,6 +115,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             }
         });
         tvJoinChat.setOnClickListener(this);
+        tvJoinShop.setOnClickListener(this);
         tagContainer.addView(buildTextView("#" + mShop.getBrand()));
         tagContainer.addView(buildTextView("#" + mShop.getType()));
         tagContainer.addView(buildTextView("#" + mShop.getWebSite()));
@@ -203,7 +206,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         } else {
             intent.putExtra(LCIMConstants.CONVERSATION_ID, mShop.getConversationId());
         }
-        intent.putExtra("shop_id", mShop.getObjectId());
+        intent.putExtra("shop", mShop);
         intent.putExtra("cov_name", "群" + mShop.getTitle());
         startActivityForResult(intent, Constant.REQUEST_CODE_CREATE_CHAT);
     }
@@ -244,6 +247,14 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             } else {
                 jumpToConversationActivity();
             }
+        } else if (id == R.id.shop_detail_join_shop) {
+            if (mShop.getUserId().equals(Utils.getUserId())) {
+                Utils.showToast(this, "不能参与自己发起的拼单哦~");
+                return;
+            }
+            Intent intent = new Intent(this, JoinShopActivity.class);
+            intent.putExtra("shop", mShop);
+            startActivityForResult(intent, Constant.REQUEST_CODE_JOIN_SHOP);
         }
     }
 }
