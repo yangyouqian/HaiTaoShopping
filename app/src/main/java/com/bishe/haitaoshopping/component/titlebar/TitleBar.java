@@ -20,6 +20,7 @@ import com.bishe.haitaoshopping.Utils;
 public class TitleBar extends LinearLayout {
 
     private ImageView ivBack;
+    private ImageView ivMore;
     private TextView tvTitle;
     private View placeHolderStatusBar;
     private OnBackClickListener onBackClickListener;
@@ -45,6 +46,7 @@ public class TitleBar extends LinearLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.title_bar_layout, this);
         ivBack = view.findViewById(R.id.iv_back);
         tvTitle = view.findViewById(R.id.tv_title);
+        ivMore = view.findViewById(R.id.iv_more);
         placeHolderStatusBar = view.findViewById(R.id.place_holder_statusBar);
         initPlaceHolder();
         ivBack.setOnClickListener(new OnClickListener() {
@@ -55,6 +57,18 @@ public class TitleBar extends LinearLayout {
                 }
             }
         });
+    }
+
+    public ImageView getMoreIcon() {
+        return ivMore;
+    }
+
+    public void showMoreIcon() {
+        ivMore.setVisibility(VISIBLE);
+    }
+
+    public void setMoreClickListener(OnClickListener listener) {
+        ivMore.setOnClickListener(listener);
     }
 
     private void initPlaceHolder() {

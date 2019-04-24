@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.DeleteCallback;
 import com.avos.avoscloud.GetCallback;
 import com.avos.avoscloud.GetDataCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
@@ -35,10 +38,13 @@ import com.bishe.haitaoshopping.chatkit.utils.LCIMConstants;
 import com.bishe.haitaoshopping.component.banner.BannerView;
 import com.bishe.haitaoshopping.component.banner.ViewCreator;
 import com.bishe.haitaoshopping.component.titlebar.TitleBar;
+import com.bishe.haitaoshopping.event.RefreshHomeShopListEvent;
 import com.bishe.haitaoshopping.model.Shop;
 
 import java.util.HashMap;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 
 public class ShopDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -57,6 +63,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
     private TextView tvJoinShop;
     private BannerView bannerView;
     private LinearLayout showPriceContainer;
+    private PopupWindow popupWindow;
 
     private Shop mShop;
 
@@ -114,6 +121,15 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                 finish();
             }
         });
+        if (mShop.getUserId().equals(Utils.getUserId())) {
+            titleBar.showMoreIcon();
+            titleBar.setMoreClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showPopupWindow(titleBar.getMoreIcon());
+                }
+            });
+        }
         tvJoinChat.setOnClickListener(this);
         tvJoinShop.setOnClickListener(this);
         tagContainer.addView(buildTextView("#" + mShop.getBrand()));
@@ -122,6 +138,51 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
         setBean(mShop.getImageUrlList());
         showPrice();
     }
+
+    private void showPopupWindow(View imageButton) {
+        popupWindow = new PopupWindow(this);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        View ppw = LayoutInflater.from(this).inflate(R.layout.layout_popupwindow, null);
+        TextView tvDelete = ppw.findViewById(R.id.tv_delete);
+        TextView tvUpdate = ppw.findViewById(R.id.tv_update);
+        TextView tvEnd = ppw.findViewById(R.id.tv_set_end);
+        tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                deleteShop();
+            }
+        });
+        tvUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        tvEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.setContentView(ppw);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0x00000000));
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.showAsDropDown(imageButton);
+    }
+
+    private void deleteShop() {
+        //TODO 添加删除确认弹窗
+        mShop.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(AVException e) {
+                EventBus.getDefault().post(new RefreshHomeShopListEvent());
+                finish();
+            }
+        });
+    }
+
 
     private void showPrice() {
         List<String> priceList = mShop.getShopPriceList();
@@ -252,6 +313,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                 Utils.showToast(this, "不能参与自己发起的拼单哦~");
                 return;
             }
+            //TODO 参与拼单前,请先完善您的个人信息~
             Intent intent = new Intent(this, JoinShopActivity.class);
             intent.putExtra("shop", mShop);
             startActivityForResult(intent, Constant.REQUEST_CODE_JOIN_SHOP);

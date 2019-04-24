@@ -31,12 +31,15 @@ import com.bishe.haitaoshopping.component.banner.ViewCreator;
 import com.bishe.haitaoshopping.component.listview.OnUpdateItemListener;
 import com.bishe.haitaoshopping.component.listview.home.MyAdapter;
 import com.bishe.haitaoshopping.component.listview.home.ViewHolder;
+import com.bishe.haitaoshopping.event.RefreshHomeShopListEvent;
 import com.bishe.haitaoshopping.model.Shop;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author yanghuan
@@ -65,11 +68,13 @@ public class HomeFragment extends Fragment {
         initBannerData();
         initListView();
         updateListViewData();
+        EventBus.getDefault().register(this);
         return view;
     }
 
     private void initListView() {
         mAdapter = new MyAdapter(getContext());
+        shopList = new ArrayList<>();
         mAdapter.setListener(new OnUpdateItemListener() {
             @Override
             public void update(final ViewHolder viewHolder, Object item) {
@@ -115,6 +120,12 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.REQUEST_CODE_CREATE_SHOP) {
@@ -126,7 +137,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateListViewData() {
-        shopList = new ArrayList<>();
+        shopList.clear();
         loadingBar.setVisibility(View.VISIBLE);
         loadingText.setVisibility(View.VISIBLE);
         AVQuery<Shop> shopQuery = new AVQuery<>("Shop");
@@ -171,5 +182,9 @@ public class HomeFragment extends Fragment {
             }
         }, beans);
         mBannerView.startTurning(5000);
+    }
+
+    public void onEvent(RefreshHomeShopListEvent event) {
+        updateListViewData();
     }
 }
