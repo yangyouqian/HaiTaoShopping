@@ -302,12 +302,14 @@
                 android:layout_marginRight="37dp"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="4dp"
+                android:paddingTop="4dp"
                 android:gravity="top"
                 android:textSize="12sp"
                 android:minHeight="90dp"
                 android:background="@drawable/create_shop_et_bg" />
 
             <TextView
+                android:id="@+id/tv_add_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -325,12 +327,66 @@
                 android:overScrollMode="never" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="选择截单时间:"
+                android:visibility="gone"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <CheckBox
+                android:id="@+id/ck_auto_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:button="@drawable/ck_select_bg"
+                android:text="自动截单"/>
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:timePickerMode="spinner"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="16dp"
+                android:text="添加备注:"
+                android:visibility="gone"
+                android:textColor="#d43030"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_note"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="4dp"
+                android:textSize="12sp"
+                android:maxLines="2"
+                android:visibility="gone"
+                android:singleLine="true"
+                android:background="@drawable/create_shop_et_bg" />
+
+            <TextView
                 android:id="@+id/btn_confirm_create"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginLeft="37dp"
                 android:layout_marginRight="37dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="18dp"
                 android:text="确认发起"
                 android:gravity="center"

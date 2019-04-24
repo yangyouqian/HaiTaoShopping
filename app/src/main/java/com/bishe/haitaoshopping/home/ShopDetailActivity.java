@@ -158,6 +158,9 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                Intent intent = new Intent(ShopDetailActivity.this, CreateShopActivity.class);
+                intent.putExtra("shop", mShop);
+                startActivityForResult(intent, Constant.REQUEST_CODE_UPDATE_SHOP);
             }
         });
         tvEnd.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +188,7 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
 
 
     private void showPrice() {
+        showPriceContainer.removeAllViews();
         List<String> priceList = mShop.getShopPriceList();
         if (Utils.isCollectionHasData(priceList)) {
             final LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, Utils.dip2pxInt(this, 35));
@@ -281,6 +285,12 @@ public class ShopDetailActivity extends AppCompatActivity implements View.OnClic
                         String covId = data.getStringExtra("cov_id");
                         mShop.setConversationId(covId);
                         mShop.saveInBackground();
+                    }
+                    break;
+                case Constant.REQUEST_CODE_UPDATE_SHOP:
+                    if (data != null) {
+                        mShop= data.getParcelableExtra("shop");
+                        initData();
                     }
                     break;
             }

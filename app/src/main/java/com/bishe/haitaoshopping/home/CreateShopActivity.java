@@ -3,7 +3,6 @@ package com.bishe.haitaoshopping.home;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
@@ -53,6 +54,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private EditText etDiscount;
     private EditText etTitle;
     private EditText etSubtitle;
+    private EditText etNote;
     private ProgressBar progressBar;
     private TextView btnConfirmCreate;
     private RecyclerView addImgRecyclerView;
@@ -60,6 +62,9 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private TextView addPriceBtn;
     private RelativeLayout addPriceTitle;
     private View addPriceLine;
+    private TimePicker timePicker;
+    private CheckBox ckAutoEnd;
+    private TextView tv_add_img;
 
     private ShopInfoDialogModel model;
     private ChooseDialog mDialog;
@@ -70,7 +75,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private boolean isAdding;//正在输入价格
     private View currentItemView;
     private List<String> priceIds;
-
+    private Shop mShop;
 
 
     @Override
@@ -83,6 +88,27 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         View contentView = findViewById(Window.ID_ANDROID_CONTENT);
         decorView.getViewTreeObserver().addOnGlobalLayoutListener(getGlobalLayoutListener(decorView, contentView));
 
+        if (getIntent() != null) {
+            mShop = getIntent().getParcelableExtra("shop");
+            if (mShop != null) {
+                updateData(mShop);
+            }
+        }
+    }
+
+    private void updateData(Shop shop) {
+        etBrand.setText(shop.getBrand());
+        etExpress.setText(shop.getExpress());
+        etType.setText(shop.getType());
+        etWebSite.setText(shop.getWebSite());
+        etExpress.setText(shop.getExpress());
+        etDiscount.setText(shop.getDiscount());
+        etTitle.setText(shop.getTitle());
+        etSubtitle.setText(shop.getSubTitle());
+        addPriceBtn.setVisibility(View.GONE);
+        addImgRecyclerView.setVisibility(View.GONE);
+        tv_add_img.setVisibility(View.GONE);
+        btnConfirmCreate.setText("确认修改");
     }
 
     private ViewTreeObserver.OnGlobalLayoutListener getGlobalLayoutListener(final View decorView, final View contentView) {
@@ -124,6 +150,10 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         addPriceBtn = findViewById(R.id.add_price_btn);
         addPriceTitle = findViewById(R.id.add_price_title);
         addPriceLine = findViewById(R.id.add_price_divider);
+        ckAutoEnd = findViewById(R.id.ck_auto_end);
+        timePicker = findViewById(R.id.timePicker);
+        etNote = findViewById(R.id.et_note);
+        tv_add_img = findViewById(R.id.tv_add_img);
         titleBar.setTitle("发起拼单");
         etBrand.setFocusable(false);
         etWebSite.setFocusable(false);
@@ -143,6 +173,8 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         model = new ShopInfoDialogModel();
         priceIds = new ArrayList<>();
         initRecyclerView();
+        //TODO 没时间了 先不搞这个
+        timePicker.setIs24HourView(true);
     }
 
     private void initRecyclerView() {
@@ -173,24 +205,24 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
     private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
         @Override
         public void onAddPicClick() {
-                // 进入相册 以下是例子：不需要的api可以不写
-                PictureSelector.create(CreateShopActivity.this)
-                        .openGallery(PictureMimeType.ofImage())
-                        .theme(R.style.picture_white_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
-                        .maxSelectNum(6)// 最大图片选择数量
-                        .minSelectNum(1)// 最小选择数量
-                        .imageSpanCount(4)// 每行显示个数
-                        .selectionMode(PictureConfig.MULTIPLE )// 多选 or 单选
-                        .previewImage(true)// 是否可预览图片
-                        .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
-                        .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
-                        .synOrAsy(true)//同步true或异步false 压缩 默认同步
-                        //.compressSavePath(getPath())//压缩图片保存地址
-                        //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
-                        .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
-                        .selectionMedia(selectList)// 是否传入已选图片
-                        .previewEggs(true)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
-                        .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
+            // 进入相册 以下是例子：不需要的api可以不写
+            PictureSelector.create(CreateShopActivity.this)
+                    .openGallery(PictureMimeType.ofImage())
+                    .theme(R.style.picture_white_style)// 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
+                    .maxSelectNum(6)// 最大图片选择数量
+                    .minSelectNum(1)// 最小选择数量
+                    .imageSpanCount(4)// 每行显示个数
+                    .selectionMode(PictureConfig.MULTIPLE)// 多选 or 单选
+                    .previewImage(true)// 是否可预览图片
+                    .isZoomAnim(true)// 图片列表点击 缩放效果 默认true
+                    .imageFormat(PictureMimeType.PNG)// 拍照保存图片格式后缀,默认jpeg
+                    .synOrAsy(true)//同步true或异步false 压缩 默认同步
+                    //.compressSavePath(getPath())//压缩图片保存地址
+                    //.sizeMultiplier(0.5f)// glide 加载图片大小 0~1之间 如设置 .glideOverride()无效
+                    .glideOverride(160, 160)// glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
+                    .selectionMedia(selectList)// 是否传入已选图片
+                    .previewEggs(true)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
+                    .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
         }
     };
 
@@ -222,7 +254,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 if (selectedInfo != null && selectedInfo.size() > 0) {
                     String selected = "";
                     for (int i = 0; i < selectedInfo.size(); i++) {
-                        selected = selected + (i == 0 ? "" :",") + selectedInfo.get(i);
+                        selected = selected + (i == 0 ? "" : ",") + selectedInfo.get(i);
                     }
                     if (mClickId == R.id.et_brand) {
                         etBrand.setText(selected);
@@ -300,8 +332,14 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 });
                 break;
             case R.id.btn_confirm_create:
-                if (checkInput()) {
-                    addShopInfoToDB();
+                if (mShop == null) {
+                    if (checkInput(false)) {
+                        addShopInfoToDB();
+                    }
+                } else {
+                    if (checkInput(true)) {
+                        saveShopInBackground(true);
+                    }
                 }
                 break;
             case R.id.add_price_btn:
@@ -369,7 +407,7 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                             }
                             //最后一张图片上传完成,添加商品到数据库中
                             if (finalI == selectList.size() - 1) {
-                                saveShopInBackground();
+                                saveShopInBackground(false);
                             }
                         }
                     });
@@ -378,28 +416,34 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         } else {
-            saveShopInBackground();
+            saveShopInBackground(false);
         }
     }
 
-    private void saveShopInBackground() {
-        Shop shop = getShop();
+    private void saveShopInBackground(final boolean update) {
+        Shop shop = getShop(update);
+        mShop = shop;
         shop.saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
                 progressBar.setVisibility(View.GONE);
                 if (e == null) {
                     Intent intent = new Intent();
-                    intent.putExtra("save", true);
-                    setResult(Constant.REQUEST_CODE_CREATE_SHOP, intent);
-                    Utils.showToast(CreateShopActivity.this, "添加成功");
+                    if (!update) {
+                        intent.putExtra("save", true);
+                        setResult(RESULT_OK, intent);
+                    } else {
+                        intent.putExtra("shop", mShop);
+                        setResult(RESULT_OK, intent);
+                    }
+                    Utils.showToast(CreateShopActivity.this, update ? "修改成功" : "添加成功");
                     finish();
                 }
             }
         });
     }
 
-    private boolean checkInput() {
+    private boolean checkInput(boolean update) {
         String brand = etBrand.getText().toString();
         String website = etWebSite.getText().toString();
         String type = etType.getText().toString();
@@ -420,15 +464,17 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
             Utils.showToast(this, "请填写标题信息");
             return false;
         }
-        if (!Utils.isCollectionHasData(priceIds)) {
+        if (!update && !Utils.isCollectionHasData(priceIds)) {
             Utils.showToast(this, "请添加价格信息");
             return false;
         }
         return true;
     }
 
-    private Shop getShop() {
-        Shop shop = new Shop();
+    private Shop getShop(boolean update) {
+        if (mShop == null) {
+            mShop = new Shop();
+        }
         String brand = etBrand.getText().toString();
         String website = etWebSite.getText().toString();
         String type = etType.getText().toString();
@@ -436,17 +482,19 @@ public class CreateShopActivity extends AppCompatActivity implements View.OnClic
         String subtitle = etSubtitle.getText().toString();
         String express = etExpress.getText().toString();
         String discount = etDiscount.getText().toString();
-        shop.setBrand(brand);
-        shop.setWebsite(website);
-        shop.setType(type);
-        shop.setExpress(express);
-        shop.setDiscount(discount);
-        shop.setTitle(title);
-        shop.setSubTitle(subtitle);
-        shop.setUserId(Utils.getUserId());
-        shop.setUserName(Utils.getUserName());
-        shop.setImageUrlList(imgUrlList);
-        shop.setShopPriceList(priceIds);
-        return shop;
+        mShop.setBrand(brand);
+        mShop.setWebsite(website);
+        mShop.setType(type);
+        mShop.setExpress(express);
+        mShop.setDiscount(discount);
+        mShop.setTitle(title);
+        mShop.setSubTitle(subtitle);
+        if (!update) {
+            mShop.setUserId(Utils.getUserId());
+            mShop.setUserName(Utils.getUserName());
+            mShop.setImageUrlList(imgUrlList);
+            mShop.setShopPriceList(priceIds);
+        }
+        return mShop;
     }
 }

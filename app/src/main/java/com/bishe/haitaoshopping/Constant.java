@@ -62,6 +62,7 @@ public class Constant {
     public static final int REQUEST_CODE_CREATE_SHOP = 2;
     public static final int REQUEST_CODE_CREATE_CHAT = 3;
     public static final int REQUEST_CODE_JOIN_SHOP = 4;
+    public static final int REQUEST_CODE_UPDATE_SHOP = 5;
 
     public static final int DEFAULT_SELECT_TAB_INDEX = 0;
 
